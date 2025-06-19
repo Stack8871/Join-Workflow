@@ -1,0 +1,25 @@
+@if (isMobile()) {
+  <div class="page-wrapper-mobil">
+    <div class="bottom-nav-mobil">
+      <div class="nav-container-mobil">
+        <app-nav></app-nav>
+      </div>
+    </div>
+  </div>
+
+} @else {
+    <div class="page-wrapper">
+      <aside class="sidebar">
+        <div> <img class="Logo-White" src="/img/sidebar/logo_sidebar.png" alt="Logo" /></div>
+        <div class="nav-container"> <app-nav></app-nav></div>
+        <div class="bottom-links"> <a class="nav-item" routerLink="/add-task"><span class="nav-text">Inpressum</span>
+        </a> <a class="nav-item" routerLink="/add-task"><span class="nav-text">Datenschutz</span>
+        </a></div>
+      </aside>
+
+    </div>
+
+
+
+
+}

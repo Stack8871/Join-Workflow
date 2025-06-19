@@ -1,0 +1,66 @@
+@use '../../../style/flexbox.scss' as *;
+
+/* =====================================
+   =            Header Desktop           =
+   ===================================== */
+.site-header {
+ @include space;
+
+  position: fixed;
+  top: 0;
+  left: 232px;
+  right: 0;
+  z-index: 10;
+  background-color: #f8f9fa;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.header-inner {
+  max-width: 1440px;
+  width: 100%;
+  margin-inline: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.text-header {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+.circle-section {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  .circle-help {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #007bff; /* Blau */
+  }
+  .circle-come-in {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #28a745; /* Grün z. B. für „Login“ oder Status */
+  }
+}
+/* =====================================
+   =            Header Mobil           =
+   ===================================== */
+.site-header-mobil{
+  @include space;
+  z-index: 10;
+  background-color: #f8f9fa;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.circle-come-in-mobil {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #28a745;
+}
+.Logo-White {
+  width: 75px;
+  height: 75px;
+}

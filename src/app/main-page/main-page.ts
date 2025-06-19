@@ -11,12 +11,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './main-page.scss'
 })
 export class MainPage {
-  @ViewChild(AddContacts) addContactsComponent!: AddContacts;
 
-  openAddContactsPopup(): void {
-    if (this.addContactsComponent) {
-      this.addContactsComponent.openPopup();
-    }
-  }
 
 }

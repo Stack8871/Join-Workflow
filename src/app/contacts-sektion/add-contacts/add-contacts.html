@@ -14,7 +14,7 @@
                 </div>
                 <div class="add-content-right" [ngClass]="mobileClass">
                     <div class="right-content">
-                        <div class="close-btn">
+                        <div class="close-btn" (click)="closePopup()">
                             <img src="/icons/close.svg" alt="close" /> <!-- Icon einfügen -->
                         </div>
                         <div class="contact-form" [ngClass]="mobileClass">
@@ -35,7 +35,7 @@
                                     <img src="/icons/call.svg" alt="phone" /> <!-- Icon einfügen -->
                                 </div>
                                 <div class="button-group" [ngClass]="mobileClass">
-                                    <button type="button" class="cancel-btn" [ngClass]="mobileClass">Cancel</button>
+                                    <button type="button" class="cancel-btn" [ngClass]="mobileClass" (click)="closePopup()">Cancel</button>
                                     <button type="submit" class="create-btn">Create contact</button>
                                 </div>
                             </form>

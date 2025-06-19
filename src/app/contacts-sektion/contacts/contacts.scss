@@ -1,0 +1,124 @@
+.contact-container {
+  width: 320px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  background-color: #fff;
+  position: fixed;
+  top: 80px;
+  left: 232px;
+  z-index: 5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.add-contact-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.96); /* Joyn-like purple color */
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #3a2fd7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(74, 63, 247, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.contact-list {
+  min-height: 100px;
+  max-height: 70vh;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #d1d1d1;
+    border-radius: 3px;
+  }
+
+  p {
+    color: #6c757d;
+    text-align: center;
+    padding: 1rem 0;
+    font-style: italic;
+  }
+}
+
+.group-header {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4a3ff7;
+  text-transform: uppercase;
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:last-child {
+    border-bottom: none;
+  }
+  &:hover {
+    background-color: #f8f9fa;
+  }
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #4a3ff7; /* Joyn-like purple color */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(74, 63, 247, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.info {
+  flex: 1;
+  overflow: hidden;
+
+  .name {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    color: #1e2a3a;
+  }
+
+  .email, .phone {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-bottom: 0.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.2s ease;
+  }
+  .email {
+    color: #4a3ff7;
+    font-weight: 500;
+  }
+}

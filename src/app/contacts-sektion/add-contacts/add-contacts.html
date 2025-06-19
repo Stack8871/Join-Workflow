@@ -3,12 +3,14 @@
         <section class="add-contacts-section" [ngClass]="mobileClass">
             <div class="card-wrapper">
                 <div class="add-content">
-                    <div class="left-container">
+                    <div class="left-container" [ngClass]="mobileClass">
                         <div class="left-content">
-                            <img class="Logo-White" src="/icons/join-logo-white.svg" alt="logo" />
+                          <img class="Logo-White" [ngClass]="mobileClass" src="/icons/join-logo-white.svg" alt="logo" />
+                            <div class="mobil-view" [ngClass]="mobileClass">
                             <h2>Add contact</h2>
                             <h3>Tasks are better with a team!</h3>
                             <img class="underline" src="/img/Card_Contacts/Vector%205.png" alt="logo" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -18,7 +20,7 @@
                             <img src="/icons/close.svg" alt="close" /> <!-- Icon einfügen -->
                         </div>
                         <div class="contact-form">
-                            <div class="contact-avatar">
+                            <div class="contact-avatar" [ngClass]="mobileClass">
                                 <img src="/icons/person.svg" alt="person" /> <!-- Icon einfügen -->
                             </div>
                             <form>

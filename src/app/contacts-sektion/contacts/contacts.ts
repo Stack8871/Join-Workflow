@@ -52,7 +52,6 @@ export class Contacts {
       phone: '+49 176 99887766',
     },
   ];
-
   get groupedContacts(): Record<string, Contact[]> {
     return this.contacts.reduce((acc, contact) => {
       const letter = contact.name.charAt(0).toUpperCase();
@@ -61,7 +60,6 @@ export class Contacts {
       return acc;
     }, {} as Record<string, Contact[]>);
   }
-
   getInitials(name: string): string {
     return name?.trim()?.charAt(0)?.toUpperCase() ?? '';
   }

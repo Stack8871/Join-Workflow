@@ -161,7 +161,35 @@
     font-weight: 500;
   }
 }
-.bine {
-  height: 100vh;
-  background-color: #007bff;
+
+.contacts-detail-container {
+  top: 190px;
+  right: 480px;
+}
+.circle-initial {
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+}
+.circle-come-in {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #f1c428; /* Grün z. B. für „Login“ oder Status */
+}
+.edit {
+  display: flex;
+  gap: 3rem;
+  top: 1rem;
+}
+
+.contacts-information {
+
+  h3 {
+    bottom: 2.75rem;
+  }
+  top: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }

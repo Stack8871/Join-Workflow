@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ContactService } from '../contact-service';
 import { CommonModule } from '@angular/common';
 
@@ -15,10 +15,23 @@ interface Contact {
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss'
 })
-export class Contacts {
+export class Contacts implements OnInit {
   constructor(private contactService: ContactService) {}
+  selectedContact: Contact | null = null;
+
+  ngOnInit(): void {
+    // Select the first contact by default if contacts exist
+    if (this.contacts.length > 0) {
+      this.selectContact(this.contacts[0]);
+    }
+  }
+
   addContact(): void {
     this.contactService.triggerAddContact();
+  }
+
+  selectContact(contact: Contact): void {
+    this.selectedContact = contact;
   }
   contacts: Contact[] = [
     {

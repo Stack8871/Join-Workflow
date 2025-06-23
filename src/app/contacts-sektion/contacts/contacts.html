@@ -11,7 +11,9 @@
           <div class="group-header">{{ group.key }}</div>
 
           @for (contact of group.value; track contact.email) {
-            <div class="contact-item">
+            <div class="contact-item"
+                 [class.selected]="selectedContact && selectedContact.email === contact.email"
+                 (click)="selectContact(contact)">
               <div class="circle">{{ getInitials(contact.name) }}</div>
 
               <div class="info">
@@ -35,11 +37,12 @@
   </div>
 
   <section class="contacts-detail-container">
+    @if (selectedContact) {
     <div class="contacts-detail">
       <div class="circle-initial">
-        <div class="circle-come-in"></div>
+        <div class="circle-come-in">{{ getInitials(selectedContact.name) }}</div>
         <div class="alignment">
-        <h2>Name, Last name</h2>
+        <h2>{{ selectedContact.name }}</h2>
 
           <div class="edit">
               <h4>Edit</h4>
@@ -52,12 +55,12 @@
             <h3>Contact Information</h3>
 
             <h4>Email</h4>
-            <p>mail...</p>
+            <p>{{ selectedContact.email }}</p>
 
             <h4>Phone</h4>
-            <p>Phone Number</p>
+            <p>{{ selectedContact.phone }}</p>
           </div>
     </div>
+    }
   </section>
 </div>
-

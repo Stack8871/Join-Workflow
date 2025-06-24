@@ -36,6 +36,8 @@ export class Contacts implements OnInit, OnDestroy {
   selectedContact: Contact | null = null;
   /** Gibt an, ob wir im Mobile-Layout sind */
   isMobile: WritableSignal<boolean> = signal(false);
+  /** Gibt an, ob die Kontaktdetails in der mobilen Ansicht angezeigt werden sollen */
+  showMobileDetails: WritableSignal<boolean> = signal(false);
 
   // ─── Subscriptions ─────────────────────────────────────────────────────────
   private breakpointSubscription: Subscription;
@@ -72,7 +74,12 @@ export class Contacts implements OnInit, OnDestroy {
   // ─── Computed Property ────────────────────────────────────────────────────
   /** Liefert CSS-Klasse je nach Bildschirmgröße */
   get mobileClass(): string {
-    return this.isMobile() ? 'mobile' : 'desktop';
+    if (!this.isMobile()) {
+      return 'desktop';
+    }
+
+    // In der mobilen Ansicht zusätzlich die show-details Klasse hinzufügen, wenn Details angezeigt werden sollen
+    return this.showMobileDetails() ? 'mobile show-details' : 'mobile';
   }
 
   // ─── Public Methods ──────────────────────────────────────────────────────
@@ -84,6 +91,16 @@ export class Contacts implements OnInit, OnDestroy {
   /** Setzt den übergebenen Kontakt als aktuell ausgewählt */
   selectContact(contact: Contact): void {
     this.selectedContact = contact;
+
+    // In der mobilen Ansicht die Detailansicht anzeigen
+    if (this.isMobile()) {
+      this.showMobileDetails.set(true);
+    }
+  }
+
+  /** Schließt die Detailansicht in der mobilen Ansicht */
+  closeContactDetails(): void {
+    this.showMobileDetails.set(false);
   }
 
   /** Gruppiert Kontakte nach ihrem Anfangsbuchstaben */

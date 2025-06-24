@@ -35,14 +35,12 @@
     <h3>Better with a team</h3>
     <img src="/img/Card_Contacts/Vector 5.png" alt="Contacts vector image" class="show-mobil" [ngClass]="mobileClass">
   </div>
+  <!-- Back button for mobile view -->
+  <button class="back-button" [class.mobile-only]="true" (click)="closeContactDetails()">←</button>
 
   <section class="contacts-detail-container" [ngClass]="mobileClass">
     @if (selectedContact) {
     <div class="contacts-detail">
-      <!-- Back button for mobile view -->
-      <button class="back-button" [class.mobile-only]="true" (click)="closeContactDetails()">
-        ←
-      </button>
       <div class="circle-initial" [ngClass]="mobileClass">
         <div class="circle-come-in" [style.background-color]="getContactColor(selectedContact)">{{ getInitials(selectedContact.name) }}</div>
         <div class="alignment" [ngClass]="mobileClass">

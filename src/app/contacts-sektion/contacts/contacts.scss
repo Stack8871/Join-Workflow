@@ -236,6 +236,38 @@
     font-weight: 500;
   }
 }
+.back-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+
+  margin-bottom: 1.5rem;
+  padding: 0;
+  background-color: transparent;
+  color:  #29ABE2;
+  border: none;
+  font-weight: 600;
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &.mobile-only {
+    display: none;
+
+    .mobile & {
+      display: block;
+    }
+  }
+}
 .contacts-detail-container {
   top: 190px;
   right: 480px;
@@ -257,36 +289,6 @@
     margin-top: 140px;
     background-color: #fff;
     box-sizing: border-box;
-  }
-  /* Blauer Pfeil zurück-Button */
-  .back-button {
-    display: block;
-    margin-bottom: 1.5rem;
-    padding: 0;
-    background-color: transparent;
-    color:  #29ABE2;
-    border: none;
-    font-weight: 600;
-    font-size: 2.5rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: left;
-
-    &:hover {
-      transform: translateY(-2px);
-    }
-
-    &:active {
-      transform: translateY(0);
-    }
-
-    &.mobile-only {
-      display: none;
-
-      .mobile & {
-        display: block;
-      }
-    }
   }
 }
 .circle-initial {

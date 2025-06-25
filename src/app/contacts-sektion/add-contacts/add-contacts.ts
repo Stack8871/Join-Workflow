@@ -9,7 +9,7 @@ import { ContactService } from '../contact-service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './add-contacts.html',
-  styleUrls: ['./add-contacts.scss']
+  styleUrl: './add-contacts.scss'
 })
 export class AddContacts implements OnDestroy {
   // ─── State Signals ─────────────────────────────────────────────────────────

@@ -14,7 +14,6 @@
     width: 100%;
     padding: 0;
   }
-
 }
 
 .contact-container {
@@ -132,6 +131,7 @@
     margin-left: 10px;
     margin-right: 10px;
     width: calc(100% - 20px);
+    display: none;
   }
 
   &:hover {
@@ -308,6 +308,7 @@
 
   .mobile & {
     gap: 1.5rem;
+    margin-bottom: $spacing-xl;
   }
 }
 .alignment {
@@ -376,4 +377,17 @@
   display:flex;
   gap:$spacing-xs;
   height:$spacing-base;
+}
+.subheadline {
+  position: relative;
+  display: inline-block;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -8px; // Abstand zur Schrift
+    left: 0;
+    width: 25%;
+    border-bottom: 3px solid $color-subtask-bar;
+  }
 }

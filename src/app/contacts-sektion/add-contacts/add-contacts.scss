@@ -80,6 +80,7 @@
   &.mobile {
 
     border-radius: 2rem 2rem 0 0;
+    width: 100%;
   }
 }
 .left-content {
@@ -208,8 +209,11 @@
 
         .input-group {
           position: relative;
-          width:100%;
-          margin-bottom: 0.5rem;
+              width: 100%;
+              margin-bottom: 0.5rem;
+              display: flex;
+              align-items: center;
+              justify-content: flex-end;
 
           input {
             width: 100%;
@@ -220,7 +224,7 @@
 
             &:focus {
               outline: none;
-              border-color: #29ABE2;
+              border-color: $color-subtask-bar;
             }
 
             &.valid-field {
@@ -235,11 +239,9 @@
           }
           img {
             position: absolute;
-            right: 12px;
-            top: 25%;
-            transform: translateY(-50%);
             width: 1.25rem;
             height: 1.25rem;
+            margin-right:$spacing-base;
           }
 
           .validation-message {
@@ -255,7 +257,7 @@
           gap: 1.25rem;
 
           &.mobile {
-            justify-content: center;
+            justify-content: left;
             margin-left: 0;
           }
 

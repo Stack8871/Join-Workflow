@@ -30,7 +30,14 @@ export class Contacts implements OnInit, OnDestroy {
     { name: 'Eva Fischer',      email: 'eva@gmail.com',        phone: '+49 172 3344556' },
     { name: 'Emmanuel Mauer',   email: 'emmanuelma@gmail.com', phone: '+49 152 7788990' },
     { name: 'Marcel Bauer',     email: 'bauer@gmail.com',      phone: '+49 176 99887766' },
-    { name: 'Frank Bauer',      email: 'bauer@gmail.com',      phone: '+49 176 99887766' }
+    { name: 'Sophia Weber',     email: 'sophia@gmail.com',     phone: '+49 177 11223344' },
+    { name: 'Thomas Müller',    email: 'thomas@gmail.com',     phone: '+49 178 22334455' },
+    { name: 'Laura Schmidt',    email: 'laura@gmail.com',      phone: '+49 179 33445566' },
+    { name: 'Michael Wagner',   email: 'michael@gmail.com',    phone: '+49 180 44556677' },
+    { name: 'Julia Becker',     email: 'julia@gmail.com',      phone: '+49 181 55667788' },
+    { name: 'Felix Hoffmann',   email: 'felix@gmail.com',      phone: '+49 182 66778899' },
+    { name: 'Nina Schneider',   email: 'nina@gmail.com',       phone: '+49 183 77889900' },
+    { name: 'Lukas Meyer',      email: 'lukas@gmail.com',      phone: '+49 184 88990011' },
   ];
   /** Aktuell ausgewählter Kontakt */
   selectedContact: Contact | null = null;

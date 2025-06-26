@@ -2,7 +2,7 @@ import { Component, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { ContactService } from '../contact-service';
+import { ContactService } from '../../services/contact.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({

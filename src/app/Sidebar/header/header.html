@@ -1,16 +1,20 @@
 @if (isMobile()) {
-  <header class="site-header-mobil">
+  <div class="site-header-mobil">
     <img class="Logo-White" src="/img/header/logomobil.png" alt="logo" />
     <div class="circle-come-in-mobil"></div>
-  </header>
+  </div>
 
 } @else {
-  <header class="site-header">
+  <div class="site-header">
     <h1 class="text-header">Kanban Projekt Management Tool</h1>
     <div class="circle-section">
-      <div class="circle-help"></div>
-      <div class="circle-user">sr</div>
+      <div class="circle-help">
+        <span>?</span>
+      </div>
+      <div class="circle-user">
+        <span>sr</span>
+      </div>
     </div>
-  </header>
+  </div>
 }
 

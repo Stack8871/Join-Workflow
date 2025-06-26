@@ -21,9 +21,14 @@ html {
     --font-size-#{$step}: #{clamped($min, $max)};
   }
 }
-
+a{
+    color:$color-subtask-bar;
+    text-decoration: none;
+    &:hover{
+      color: $color-avatar-3;
+    }
+}
 $font-family-base: 'Inter', sans-serif;
-
 $font-weight-bold: 700;
 $font-weight-semi: 600;
 $font-weight-regular: 400;

@@ -37,6 +37,10 @@
     height: 35px;
     text-align: center;
     margin-right: 2rem;
+    color:$color-medium-gray;
+    &:hover{
+      background:$color-lighter-gray;
+    }
   }
     .circle-help{
       border: 2px $color-gray solid;

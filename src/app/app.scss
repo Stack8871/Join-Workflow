@@ -1,6 +1,7 @@
 @use 'index' as *;
 body{
     font-family: $font-family-base;
+    font-weight: $font-weight-regular;
 }
 .grid-container {
   display: grid;
@@ -50,6 +51,7 @@ max-width:100dvw;
 .right-container{
   flex:2;
 }
+
 @media (max-width < 768px) {
   .grid-container {
     grid-template-columns: 1fr;

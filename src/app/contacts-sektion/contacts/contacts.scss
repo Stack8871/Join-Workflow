@@ -63,6 +63,7 @@ align-items: center;
     h3 {
       font-size: var(--font-size-base);
       margin-top: -48px;
+      font-weight: $font-weight-regular;
     }
   }
   .mobile.show-details & {
@@ -89,7 +90,6 @@ align-items: center;
   }
   h3 {
     font-size: var(--font-size-md);
-    font-weight: 400;
     color: $color-primary;
   }
 }
@@ -189,8 +189,8 @@ align-items: center;
   font-size: $spacing-base;
   margin-right: $spacing-base;
   flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: $header-shadow;
+  text-shadow: $card-shadow;
 }
 .info {
   flex: 1;
@@ -272,7 +272,7 @@ align-items: center;
     overflow-y: auto;
     padding: $spacing-base;
     margin-top: 140px;
-    background-color: #fff;
+    background-color: $color-white;
     box-sizing: border-box;
   }
 }
@@ -297,7 +297,7 @@ align-items: center;
     text-align: center;
   }
 }
-.circle-user {
+.circle-user  {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -306,8 +306,14 @@ align-items: center;
   justify-content: center;
   font-weight: 600;
   font-size: $spacing-lg;
-  color: white;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  color: $color-white;
+  text-shadow: $card-shadow;
+  background: $color-gray;
+
+  &:hover{
+    background: $color-medium-gray;
+  color: $color-white;
+  }
 }
 .button-group {
   display: flex;
@@ -323,6 +329,7 @@ align-items: center;
 .contacts-information {
   h3 {
     bottom: 2.75rem;
+    font-weight: $font-weight-regular;
   }
   top: 6rem;
   display: flex;

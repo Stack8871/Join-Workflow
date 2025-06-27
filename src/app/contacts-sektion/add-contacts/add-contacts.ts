@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { ContactService } from '../../services/contact.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-add-contacts',
@@ -14,10 +16,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class AddContacts implements OnDestroy {
   isMobile: WritableSignal<boolean> = signal(false);
-  isOpen = false;
+  isOpen = signal(false);
+  @Output() close = new EventEmitter<void>();
   contactForm: FormGroup;
   private breakpointSubscription: Subscription;
-  private addContactSubscription: Subscription;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -32,9 +34,6 @@ export class AddContacts implements OnDestroy {
     this.breakpointSubscription = this.breakpointObserver
       .observe(['(max-width: 949px)'])
       .subscribe(result => this.isMobile.set(result.matches));
-    this.addContactSubscription = this.contactService
-      .addContactClick$
-      .subscribe(() => this.openPopup());
   }
 
   private hasFieldState(fieldName: string, shouldBeValid: boolean): boolean {
@@ -74,16 +73,16 @@ export class AddContacts implements OnDestroy {
 
   ngOnDestroy(): void {
     this.breakpointSubscription.unsubscribe();
-    this.addContactSubscription.unsubscribe();
   }
 
   openPopup(): void {
     this.contactForm.reset();
-    this.isOpen = true;
+    this.isOpen.set(true);
   }
 
   closePopup(): void {
-    this.isOpen = false;
+    this.isOpen.set(false);
+    this.close.emit();
   }
 
   onSubmit(): void {

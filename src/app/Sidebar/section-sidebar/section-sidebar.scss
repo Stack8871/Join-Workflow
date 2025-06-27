@@ -37,3 +37,11 @@ width:100%;
   background: $color-primary;
   z-index: 1000;
 }
+.nav-item{
+  color:$color-medium-gray;
+  margin-bottom: $spacing-md;
+  &:hover{
+      color:$color-lighter-gray;
+  }
+
+}

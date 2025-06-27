@@ -1,18 +1,10 @@
 @use 'index' as *;
 
 .contacts-page-container {
-display: flex
-;
-    /* position: fixed; */
-    /* top: 80px; */
-    /* left: 232px; */
-    /* z-index: 5; */
-    /* width: calc(100% - 232px); */
     display: flex;
     flex-direction: column;
     width: 82svw;
     flex-direction: row;
-
   &.mobile {
     flex-direction: column;
     left: 0;
@@ -20,7 +12,6 @@ display: flex
     padding: 0;
   }
 }
-
 .contact-container {
   border: 1px solid #e0e0e0;
     padding: 1.25rem;
@@ -30,7 +21,6 @@ display: flex
     flex: 1;
     display: flex;
     flex-direction: column;
-
   .mobile & {
     width: 100%;
     margin-bottom: $spacing-base;
@@ -38,8 +28,6 @@ display: flex
     border-radius: 0;
     box-sizing: border-box;
   }
-
-
   .mobile.show-details & {
     display: none;
   }
@@ -52,21 +40,17 @@ display: flex
     margin-top: -20px;
   }
 }
-
-
 .contacts-info-container {
   display: flex;
   gap: $spacing-lg;
   width:auto;
   margin-bottom: $spacing-3xl;
-
   .mobile & {
     flex-direction: column;
     margin-left: 0;
     padding-left: 20px;
     padding-top: 20px;
     align-items: flex-start;
-
     h2 {
       font-size: var(--font-size-xl);
       font-weight: bold;
@@ -80,26 +64,21 @@ display: flex
       margin-top: -48px;
     }
   }
-
   .mobile.show-details & {
     position: relative;
     z-index: 1;
     background-color: #fff;
     padding-bottom: 20px;
     margin-bottom: 10px;
-
   }
-
   h2 {
     font-size: var(--font-size-2xl);
     font-weight: 700;
     color: $color-black;
     margin: 0;
   }
-
   .contacts-info-line {
     margin: 0;
-
     img {
       max-width: 100%;
       height: 44px;
@@ -107,7 +86,6 @@ display: flex
       display: block;
     }
   }
-
   h3 {
     font-size: var(--font-size-md);
     font-weight: 400;
@@ -120,7 +98,6 @@ display: flex
   height: 20px;
   margin-left: 8px;
 }
-
 .add-contact-btn {
     display:flex;
     justify-content: center;
@@ -134,7 +111,6 @@ display: flex
     color: $color-white;
     border: 1px solid $color-primary;
     width:100%;
-
   .mobile & {
     margin-left: 10px;
     margin-right: 10px;
@@ -147,29 +123,23 @@ display: flex
     border-color: #29ABE2;
     box-shadow:$card-shadow;
   }
-
   &:active {
     transform: translateY(0);
   }
 }
-
 .contact-list {
   min-height: 100px;
   max-height: 78vh;
   overflow-y: auto;
   padding-bottom:$spacing-2xl;
-
   scrollbar-width: none;
   -ms-overflow-style: none;
-
   &::-webkit-scrollbar {
     display: none;
   }
-
   .mobile & {
     max-height: calc(100vh - 160px);
   }
-
   p {
     color: #6c757d;
     text-align: center;
@@ -177,7 +147,6 @@ display: flex
     font-style: italic;
   }
 }
-
 .group-header {
   font-size: 0.75rem;
   font-weight: 700;
@@ -186,7 +155,6 @@ display: flex
   padding: 0.5rem 0;
   margin-top: 0.5rem;
   border-bottom: 2px solid #f0f0f0;
-
 }
 .contact-item {
   display: flex;
@@ -202,16 +170,13 @@ display: flex
   &:hover {
     background-color: #f8f9fa;
   }
-
   &.selected {
     background-color:$color-primary;
-
   }
 }
 .contact-item.selected .name{
     color: $color-white;
 }
-
 .circle {
   width: 40px;
   height: 40px;
@@ -227,18 +192,15 @@ display: flex
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
-
 .info {
   flex: 1;
   overflow: hidden;
-
   .name {
     font-weight: 600;
     font-size: $spacing-base;
     margin-bottom: 0.25rem;
     color: $color-black;
   }
-
   .email, .phone {
     font-size: 0.85rem;
     color: #6c757d;
@@ -290,8 +252,6 @@ display: flex
   flex-direction: column;
 }
 .contacts-detail-container {
-    /* top: 190px; */
-    /* right: 480px; */
     display: flex;
     flex: 2;
     flex-direction: column;
@@ -322,7 +282,6 @@ display: flex
   justify-content: start;
   align-items: center;
   //align-items: start;
-
   .mobile & {
     gap: 1.5rem;
     margin-bottom: $spacing-xl;
@@ -338,7 +297,6 @@ display: flex
     text-align: center;
   }
 }
-
 .circle-user {
   width: 100px;
   height: 100px;
@@ -351,7 +309,6 @@ display: flex
   color: white;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
-
 .button-group {
   display: flex;
   gap: $spacing-2xl;
@@ -363,9 +320,7 @@ display: flex
     gap: $spacing-lg;
   }
 }
-
 .contacts-information {
-
   h3 {
     bottom: 2.75rem;
   }
@@ -373,11 +328,7 @@ display: flex
   display: flex;
   flex-direction: column;
   gap: $spacing-base;
-
   .mobile & {
-    h3 {
-      bottom: $spacing-base;
-    }
     top: $spacing-2xl;
     display: flex;
     flex-direction: column;
@@ -395,7 +346,6 @@ display: flex
 .subheadline {
   position: relative;
   display: inline-block;
-
   &::before {
     content: "";
     position: absolute;

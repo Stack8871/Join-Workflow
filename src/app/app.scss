@@ -8,9 +8,6 @@ body{
   grid-template-rows: auto auto;
   height: 100svh;
 }
-.sidebar{
-    max-width: 14.5rem;
-}
 
 @media (max-width < 768px) {
   .grid-container {
@@ -34,21 +31,18 @@ header {
   grid-column: 1;
   grid-row: 1 / 3;
   color: $color-gray;
-}
-
-main{
-  max-width: $max-width;
+  background: $color-primary;
+  max-width:232px;
 }
 
 .content-container {
   grid-column: 2 / 4;
   grid-row: 2;
-
-  padding: 1rem;
 }
 .content{
 display: flex;
 flex-wrap: wrap;
+max-width:100dvw;
 }
 .left-container{
   flex:1;

@@ -16,7 +16,7 @@ import { Output, EventEmitter } from '@angular/core';
 })
 export class AddContacts implements OnDestroy {
   isMobile: WritableSignal<boolean> = signal(false);
-  isOpen = signal(false);
+ 
   @Output() close = new EventEmitter<void>();
   contactForm: FormGroup;
   private breakpointSubscription: Subscription;
@@ -77,11 +77,9 @@ export class AddContacts implements OnDestroy {
 
   openPopup(): void {
     this.contactForm.reset();
-    this.isOpen.set(true);
   }
 
   closePopup(): void {
-    this.isOpen.set(false);
     this.close.emit();
   }
 

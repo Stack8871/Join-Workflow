@@ -5,13 +5,9 @@ import { ColorService } from '../../services/color.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-
 import { Contact } from '../../interfaces/contact.interface';
 import { Firestore, doc, updateDoc, deleteDoc, collection } from '@angular/fire/firestore';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-
 import { collectionData } from '@angular/fire/firestore';
 import { AddContacts } from '../add-contacts/add-contacts';
 
@@ -25,6 +21,7 @@ import { AddContacts } from '../add-contacts/add-contacts';
   templateUrl: './contacts.html',
   styleUrls: ['./contacts.scss']
 })
+
 export class Contacts implements OnInit, OnDestroy {
   contacts$: Observable<Contact[]>;
 
@@ -103,6 +100,10 @@ export class Contacts implements OnInit, OnDestroy {
 
   openPopup(): void {
     this.isAddOpen.set(true);
+  }
+
+  closeAddPopup(): void {
+    this.isAddOpen.set(false);
   }
 
   selectContact(contact: Contact): void {

@@ -15,46 +15,43 @@ import { collectionData, docData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Contact } from '../interfaces/contact.interface';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class FirestoreService {
-    private firestore: Firestore;
+  private contactsCollection: CollectionReference<Contact>;
 
-    contacts: ReturnType<typeof collectionSignals<Contact>>;
+  constructor(private firestore: Firestore) {
+    this.contactsCollection = collection(this.firestore, 'contacts') as CollectionReference<Contact>;
+  }
 
-    constructor() {
-        this.firestore = inject(Firestore);
-        this.contacts = collectionSignals<Contact>(
-        collection(this.firestore, 'contacts') as CollectionReference<Contact>,
-        { idField: 'id' }
-        );
-    }
+  getContacts(): Observable<Contact[]> {
+    return collectionData(this.contactsCollection, { idField: 'id' }) as Observable<Contact[]>;
+  }
 
-    getContactById(id: string) {
-        const docRef = doc(this.firestore, `contacts/${id}`);
-        return docSignals<Contact>(docRef);
-    }
+  getContactById(id: string): Observable<Contact | undefined> {
+    const docRef: DocumentReference<Contact> = doc(this.contactsCollection, id);
+    return docData(docRef, { idField: 'id' }) as Observable<Contact | undefined>;
+  }
 
-    addContact(contact: Contact) {
-    const ref = collection(this.firestore, 'contacts');
-    return addDoc(ref, contact);
-    }
+  addContact(contact: Contact): Promise<DocumentReference<Contact>> {
+    return addDoc(this.contactsCollection, contact);
+  }
 
-    async updateContact(contact: Contact) {
-        if (!contact.id) return;
-        const ref = doc(this.firestore, `contacts/${contact.id}`);
-        await setDoc(ref, contact);
-    }
+  updateContact(contact: Contact): Promise<void> {
+    if (!contact.id) return Promise.reject('Contact ID is missing');
 
-    async deleteContact(id: string) {
-        const ref = doc(this.firestore, `contacts/${id}`);
-        await deleteDoc(ref);
-    }
+    const docRef: DocumentReference<Contact> = doc(this.contactsCollection, contact.id);
+    return updateDoc(docRef, {
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone ?? '',
+      color: contact.color ?? ''
+    });
+  }
+
+  deleteContact(id: string): Promise<void> {
+    const docRef: DocumentReference<Contact> = doc(this.contactsCollection, id);
+    return deleteDoc(docRef);
+  }
 }
-
-    function collectionSignals<T>(contactsCollection: CollectionReference<DocumentData, DocumentData>, arg1: { idField: string; }) {
-        throw new Error('Function not implemented.');
-    }
-    function docSignals<T>(docRef: DocumentReference<DocumentData, DocumentData>) {
-        throw new Error('Function not implemented.');
-    }
-

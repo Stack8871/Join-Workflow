@@ -7,7 +7,7 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Contact } from '../../interfaces/contact.interface';
-import { Firestore, doc, updateDoc, deleteDoc, collection } from 'firebase/firestore';
+import { Firestore, doc, updateDoc, deleteDoc, collection } from '@angular/fire/firestore';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 

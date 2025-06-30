@@ -1,32 +1,30 @@
-import { Injectable } from '@angular/core';
-import { FirestoreService } from './firestore.service';
+import { inject, Injectable } from '@angular/core';
+import { Firestore, collection, collectionData, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Contact } from '../interfaces/contact.interface';
 import { Observable } from 'rxjs';
 
-
 @Injectable({ providedIn: 'root' })
 export class ContactService {
-  private readonly collectionName = 'contacts';
-
-  constructor(private firestoreService: FirestoreService) {}
+  private firestore: Firestore = inject(Firestore);
+  private contactsRef = collection(this.firestore, 'contacts');
 
   getContacts(): Observable<Contact[]> {
-    return this.firestoreService.getCollection<Contact>(this.collectionName);
+    return collectionData(this.contactsRef, { idField: 'id' }) as Observable<Contact[]>;
   }
 
-  getContact(id: string): Observable<Contact> {
-    return this.firestoreService.getDocument<Contact>(this.collectionName, id);
+  updateContact(contact: Contact): void {
+    if (!contact.id) return;
+    const docRef = doc(this.firestore, `contacts/${contact.id}`);
+    updateDoc(docRef, {
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone || '',
+      color: contact.color || '',
+    });
   }
 
-  addContact(contact: Contact) {
-    return this.firestoreService.addDocument<Contact>(this.collectionName, contact);
-  }
-
-  updateContact(id: string, contact: Partial<Contact>) {
-    return this.firestoreService.updateDocument<Contact>(this.collectionName, id, contact);
-  }
-
-  deleteContact(id: string) {
-    return this.firestoreService.deleteDocument(this.collectionName, id);
+  deleteContact(contactId: string): void {
+    const docRef = doc(this.firestore, `contacts/${contactId}`);
+    deleteDoc(docRef);
   }
 }

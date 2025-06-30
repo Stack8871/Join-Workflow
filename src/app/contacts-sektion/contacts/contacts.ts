@@ -1,12 +1,17 @@
-import { Component, OnInit, OnDestroy, signal, WritableSignal } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, WritableSignal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../../services/contact.service';
 import { ColorService } from '../../services/color.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 
 import { Contact } from '../../interfaces/contact.interface';
+import { FirestoreService } from '../../services/firestore.service';
 import { AddContacts } from '../add-contacts/add-contacts';
+import { collection, Firestore, updateDoc } from 'firebase/firestore';
+import { collectionData } from '@angular/fire/firestore';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { get } from 'firebase/database';
 
 @Component({
   selector: 'app-contacts',
@@ -19,39 +24,57 @@ import { AddContacts } from '../add-contacts/add-contacts';
 })
 
 export class Contacts implements OnInit, OnDestroy {
-  contacts: Contact[] = [];
+  contacts$: Observable<Contact[]>;
+
+  contactForm!: FormGroup;
+
   isAddOpen: WritableSignal<boolean> = signal(false);
   selectedContact: Contact | null = null;
   isMobile: WritableSignal<boolean> = signal(false);
   showMobileDetails: WritableSignal<boolean> = signal(false);
 
+  private destroy$ = new Subject<void>();
   private breakpointSubscription: Subscription;
-  private contactsSubscription?: Subscription;
 
   constructor(
-    private contactService: ContactService,
+    private firestore: Firestore, 
+    private fb: FormBuilder,
+    private contactsService: ContactService,
     private colorService: ColorService,
     private breakpointObserver: BreakpointObserver
   ) {
+    const contactsRef = collection(this.firestore, 'contacts');
+    this.contacts$ = collectionData(contactsRef, { idField: 'id' }) as Observable<Contact[]>;
+
     this.breakpointSubscription = this.breakpointObserver
       .observe(['(max-width: 949px)'])
       .subscribe(result => this.isMobile.set(result.matches));
+    }
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
   }
 
   ngOnInit(): void {
-    this.contactsSubscription = this.contactService.getContacts().subscribe((contactsFromDb) => {
-      this.contacts = contactsFromDb;
-      this.assignColorsToContacts();
-
-      if (this.contacts.length > 0) {
-        this.selectContact(this.contacts[0]);
-      }
-    });
+    this.initForm();
   }
 
   ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
     this.breakpointSubscription.unsubscribe();
-    this.contactsSubscription?.unsubscribe();
+  }
+
+  initForm(): void {
+    this.contactForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: [''],
+      color: ['']
+    });
   }
 
   get mobileClass(): string {
@@ -62,13 +85,11 @@ export class Contacts implements OnInit, OnDestroy {
   }
 
   openPopup(): void {
-    console.log('Overlay wird geöffnet!');
     this.isAddOpen.set(true);
   }
 
   selectContact(contact: Contact): void {
     this.selectedContact = contact;
-
     if (this.isMobile()) {
       this.showMobileDetails.set(true);
     }
@@ -79,7 +100,8 @@ export class Contacts implements OnInit, OnDestroy {
   }
 
   get groupedContacts(): Record<string, Contact[]> {
-    return this.contacts.reduce((acc, contact) => {
+    const raw = this.contacts();
+    return raw.reduce((acc, contact) => {
       const letter = contact.name.charAt(0).toUpperCase();
       (acc[letter] ||= []).push(contact);
       return acc;
@@ -105,4 +127,53 @@ export class Contacts implements OnInit, OnDestroy {
       contact.color = this.colorService.generateColorByString(contact.name);
     });
   }
+
+  updateDoc(contact: Contact) void {
+    if (!contact.id) return;
+
+    const docRef = doc(this.firestore, `contacts/${contact.id}`);
+    updateDoc(docRef, {
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone || '',
+      color: contact.color || ''
+    });
+  }
+
+  deleteContact(id: string): void {
+    this.contactsService.deleteContact(id);
+  }
+
+  saveContact(): void {
+    if (this.contactForm.invalid) return;
+    const contact: Contact = this.contactForm.value;
+    this.contactsService.addContact(contact);
+    this.contactForm.reset();
+    this.isAddOpen.set(false);
+  }
+
+  deleteContact(contactId: string) {
+    const docRef = doc(this.firestore, `contacts/${id}`);
+    deleteDoc(docRef);
+  }
+
+  ngOnInit(): void {
+    this.initForm();
+    this.contactsService.loadContacts()
+  }
+
+  initForm(): void {
+    this.contactForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: [''],
+      color: ['']
+    });
+  }
+
+  ngOnDestroy(): void {
+      this.destroy$.next();
+      this.destroy$.complete();
+    }
+
 }

@@ -17,19 +17,24 @@ import { Contact } from '../interfaces/contact.interface';
 
 @Injectable({ providedIn: 'root' })
 export class FirestoreService {
-  private firestore = inject(Firestore);
+    private firestore: Firestore;
 
-  contacts = collectionSignals<Contact>(
-    collection(this.firestore, 'contacts') as CollectionReference<Contact>,
-    { idField: 'id' }
-  );
+    contacts: ReturnType<typeof collectionSignals<Contact>>;
+
+    constructor() {
+        this.firestore = inject(Firestore);
+        this.contacts = collectionSignals<Contact>(
+        collection(this.firestore, 'contacts') as CollectionReference<Contact>,
+        { idField: 'id' }
+        );
+    }
 
     getContactById(id: string) {
         const docRef = doc(this.firestore, `contacts/${id}`);
         return docSignals<Contact>(docRef);
     }
 
-     addContact(contact: Contact) {
+    addContact(contact: Contact) {
     const ref = collection(this.firestore, 'contacts');
     return addDoc(ref, contact);
     }

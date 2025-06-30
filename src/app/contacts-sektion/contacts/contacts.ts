@@ -1,30 +1,32 @@
-import { Component, OnInit, OnDestroy, signal, WritableSignal, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../../services/contact.service';
 import { ColorService } from '../../services/color.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable, Subject, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Contact } from '../../interfaces/contact.interface';
-import { FirestoreService } from '../../services/firestore.service';
+import { Firestore, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, collectionData } from '@angular/fire/firestore';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { AddContacts } from '../add-contacts/add-contacts';
-import { collection, Firestore, updateDoc } from 'firebase/firestore';
-import { collectionData } from '@angular/fire/firestore';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { get } from 'firebase/database';
 
 @Component({
   selector: 'app-contacts',
   standalone: true,
   imports: [
     CommonModule,
-    AddContacts],
+    AddContacts
+  ],
   templateUrl: './contacts.html',
-  styleUrl: './contacts.scss'
+  styleUrls: ['./contacts.scss']
 })
-
 export class Contacts implements OnInit, OnDestroy {
   contacts$: Observable<Contact[]>;
+
+  public contacts: Contact[] = [];
 
   contactForm!: FormGroup;
 
@@ -36,8 +38,10 @@ export class Contacts implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private breakpointSubscription: Subscription;
 
+  groupedContacts$: Observable<Record<string, Contact[]>>;
+
   constructor(
-    private firestore: Firestore, 
+    private firestore: Firestore,
     private fb: FormBuilder,
     private contactsService: ContactService,
     private colorService: ColorService,
@@ -46,20 +50,31 @@ export class Contacts implements OnInit, OnDestroy {
     const contactsRef = collection(this.firestore, 'contacts');
     this.contacts$ = collectionData(contactsRef, { idField: 'id' }) as Observable<Contact[]>;
 
+    this.groupedContacts$ = this.contacts$.pipe(
+      map(contacts => {
+        return contacts.reduce((acc: Record<string, Contact[]>, contact: Contact) => {
+          const letter = contact.name.charAt(0).toUpperCase();
+          if (!acc[letter]) {
+            acc[letter] = [];
+          }
+          acc[letter].push(contact);
+          return acc;
+        }, {});
+      })
+    );
+
     this.breakpointSubscription = this.breakpointObserver
       .observe(['(max-width: 949px)'])
       .subscribe(result => this.isMobile.set(result.matches));
-    }
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
   }
 
   ngOnInit(): void {
     this.initForm();
+
+    this.contacts$.subscribe(contacts => {
+      this.contacts = contacts;
+      this.assignColorsToContacts();
+    });
   }
 
   ngOnDestroy(): void {
@@ -99,15 +114,6 @@ export class Contacts implements OnInit, OnDestroy {
     this.showMobileDetails.set(false);
   }
 
-  get groupedContacts(): Record<string, Contact[]> {
-    const raw = this.contacts();
-    return raw.reduce((acc, contact) => {
-      const letter = contact.name.charAt(0).toUpperCase();
-      (acc[letter] ||= []).push(contact);
-      return acc;
-    }, {} as Record<string, Contact[]>);
-  }
-
   getInitials(name: string): string {
     const nameParts = name.trim().split(' ');
     if (nameParts.length === 1) {
@@ -128,7 +134,7 @@ export class Contacts implements OnInit, OnDestroy {
     });
   }
 
-  updateDoc(contact: Contact) void {
+  updateDoc(contact: Contact): void {
     if (!contact.id) return;
 
     const docRef = doc(this.firestore, `contacts/${contact.id}`);
@@ -144,6 +150,11 @@ export class Contacts implements OnInit, OnDestroy {
     this.contactsService.deleteContact(id);
   }
 
+  deleteContactById(contactId: string): void {
+    const docRef = doc(this.firestore, `contacts/${contactId}`);
+    deleteDoc(docRef);
+  }
+
   saveContact(): void {
     if (this.contactForm.invalid) return;
     const contact: Contact = this.contactForm.value;
@@ -152,28 +163,7 @@ export class Contacts implements OnInit, OnDestroy {
     this.isAddOpen.set(false);
   }
 
-  deleteContact(contactId: string) {
-    const docRef = doc(this.firestore, `contacts/${id}`);
-    deleteDoc(docRef);
+  getKeys(obj: Record<string, Contact[]> | null): string[] {
+    return obj ? Object.keys(obj) : [];
   }
-
-  ngOnInit(): void {
-    this.initForm();
-    this.contactsService.loadContacts()
-  }
-
-  initForm(): void {
-    this.contactForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: [''],
-      color: ['']
-    });
-  }
-
-  ngOnDestroy(): void {
-      this.destroy$.next();
-      this.destroy$.complete();
-    }
-
 }

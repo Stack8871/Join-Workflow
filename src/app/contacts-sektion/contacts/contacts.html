@@ -6,25 +6,32 @@
   </button>
 
   <div class="contact-list">
-    @if (contacts.length === 0) {
-    } @else {
-      @for (group of groupedContacts | keyvalue; track group.key) {
-        <div class="group-header">{{ group.key }}</div>
-
-        @for (contact of group.value; track contact.email) {
+    <ng-container *ngIf="(groupedContacts$ | async) as groupedContacts; else loading">
+      <div *ngIf="!groupedContacts || (getKeys(groupedContacts).length === 0)">
+        <p>No contacts found.</p>
+      </div>
+      <ng-container *ngIf="groupedContacts && getKeys(groupedContacts).length > 0">
+        <ng-container *ngFor="let group of groupedContacts | keyvalue">
+          <div class="group-header">{{ group.key }}</div>
+          <ng-container *ngFor="let contact of group.value">
             <div class="contact-item"
-                 [class.selected]="selectedContact && selectedContact.email === contact.email"
-                 (click)="selectContact(contact)">
-              <div class="circle" [style.background-color]="getContactColor(contact)">{{ getInitials(contact.name) }}</div>
-
-            <div class="info">
-              <div class="name">{{ contact.name }}</div>
-              <div class="email">{{ contact.email }}</div>
+                [class.selected]="selectedContact?.email === contact.email"
+                (click)="selectContact(contact)">
+              <div class="circle" [style.background-color]="getContactColor(contact)">
+                {{ getInitials(contact.name) }}
+              </div>
+              <div class="info">
+                <div class="name">{{ contact.name }}</div>
+                <div class="email">{{ contact.email }}</div>
+              </div>
             </div>
-          </div>
-        }
-      }
-    }
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-template #loading>
+      <p>Loading contacts...</p>
+    </ng-template>
   </div>
 </div>
   <section class="contacts-detail-container" [ngClass]="mobileClass">

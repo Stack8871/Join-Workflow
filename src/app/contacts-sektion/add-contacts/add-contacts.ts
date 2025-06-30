@@ -1,10 +1,11 @@
-import { Component, OnDestroy, signal, WritableSignal } from '@angular/core';
+import { Component, NgZone, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { ContactService } from '../../services/contact.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Output, EventEmitter } from '@angular/core';
+import { Contact } from '../../interfaces/contact.interface';
 
 
 @Component({
@@ -12,11 +13,10 @@ import { Output, EventEmitter } from '@angular/core';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-contacts.html',
-  styleUrl: './add-contacts.scss'
+  styleUrls: ['./add-contacts.scss']
 })
 export class AddContacts implements OnDestroy {
   isMobile: WritableSignal<boolean> = signal(false);
- 
   @Output() close = new EventEmitter<void>();
   contactForm: FormGroup;
   private breakpointSubscription: Subscription;
@@ -24,7 +24,8 @@ export class AddContacts implements OnDestroy {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private contactService: ContactService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private ngZone: NgZone
   ) {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
@@ -84,13 +85,19 @@ export class AddContacts implements OnDestroy {
   }
 
   onSubmit(): void {
-    Object.keys(this.contactForm.controls).forEach(key => {
-      const control = this.contactForm.get(key);
-      control?.markAsTouched();
+    if (this.contactForm.invalid) return;
+
+    const contact: Contact = this.contactForm.value;
+
+    this.contactService.addContact(contact).subscribe({
+      next: () => {
+        console.log('contact added');
+        this.contactForm.reset();
+        this.closePopup();
+      },
+      error: (err) => {
+            console.error('Error adding contact:', err);
+          }
     });
-    if (this.contactForm.valid) {
-      console.log('Form submitted:', this.contactForm.value);
-      this.closePopup();
-    }
   }
 }

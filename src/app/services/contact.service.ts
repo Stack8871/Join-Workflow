@@ -1,34 +1,59 @@
-import { inject, Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, updateDoc, deleteDoc, addDoc } from '@angular/fire/firestore';
+import { inject, Injectable, NgZone } from '@angular/core';
+import { Firestore, collection, collectionData, doc, updateDoc, deleteDoc, addDoc, CollectionReference, DocumentData } from '@angular/fire/firestore';
 import { Contact } from '../interfaces/contact.interface';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ContactService {
-  private firestore: Firestore = inject(Firestore);
-  private contactsRef = collection(this.firestore, 'contacts');
+  private readonly firestore: Firestore = inject(Firestore);
+  private readonly ngZone: NgZone = inject(NgZone);
+  private readonly contactsRef: CollectionReference<DocumentData> = collection(this.firestore, 'contacts');
 
   getContacts(): Observable<Contact[]> {
     return collectionData(this.contactsRef, { idField: 'id' }) as Observable<Contact[]>;
   }
 
-  addContact(contact: Contact) {
-    return addDoc(this.contactsRef, contact);
+  addContact(contact: Contact): Observable<void> {
+    return from(
+      new Promise<void>((resolve, reject) => {
+        this.ngZone.run(() => {
+          addDoc(this.contactsRef, contact)
+            .then(() => resolve())
+            .catch(reject);
+        });
+      })
+    );
   }
 
-  updateContact(contact: Contact): void {
-    if (!contact.id) return;
+  updateContact(contact: Contact): Observable<void> {
+    if (!contact.id) return from(Promise.resolve());
     const docRef = doc(this.firestore, `contacts/${contact.id}`);
-    updateDoc(docRef, {
-      name: contact.name,
-      email: contact.email,
-      phone: contact.phone || '',
-      color: contact.color || '',
-    });
+    return from(
+      new Promise<void>((resolve, reject) => {
+        this.ngZone.run(() => {
+          updateDoc(docRef, {
+            name: contact.name,
+            email: contact.email,
+            phone: contact.phone || '',
+            color: contact.color || '',
+          })
+            .then(() => resolve())
+            .catch(reject);
+        });
+      })
+    );
   }
 
-  deleteContact(contactId: string): void {
+  deleteContact(contactId: string): Observable<void> {
     const docRef = doc(this.firestore, `contacts/${contactId}`);
-    deleteDoc(docRef);
+    return from(
+      new Promise<void>((resolve, reject) => {
+        this.ngZone.run(() => {
+          deleteDoc(docRef)
+            .then(() => resolve())
+            .catch(reject);
+        });
+      })
+    );
   }
 }

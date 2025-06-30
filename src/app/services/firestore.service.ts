@@ -21,7 +21,7 @@ export class FirestoreService {
 
   contacts = collectionSignals<Contact>(
     collection(this.firestore, 'contacts') as CollectionReference<Contact>,
-    { idField: 'id' } // 👈 WICHTIG!
+    { idField: 'id' }
   );
 
     getContactById(id: string) {

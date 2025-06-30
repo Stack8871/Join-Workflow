@@ -81,6 +81,7 @@ export class AddContacts implements OnDestroy {
   }
 
   closePopup(): void {
+    console.log('add-contat close overlay');
     this.close.emit();
   }
 
@@ -91,7 +92,8 @@ export class AddContacts implements OnDestroy {
 
     this.contactService.addContact(contact).subscribe({
       next: () => {
-        console.log('contact added');
+        console.log('contact added', contact);
+        console.log()
         this.contactForm.reset();
         this.closePopup();
       },

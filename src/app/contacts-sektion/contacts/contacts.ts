@@ -103,6 +103,12 @@ export class Contacts implements OnInit, OnDestroy {
   }
 
   closeAddPopup(): void {
+    console.log('close overlay clicked');
+    this.isAddOpen.set(false);
+  }
+
+  onClosePopup() {
+    console.log('onClosePopup');
     this.isAddOpen.set(false);
   }
 

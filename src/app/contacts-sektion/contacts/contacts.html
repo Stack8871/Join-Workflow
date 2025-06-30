@@ -4,42 +4,57 @@
     Add new contact
     <img src="/icons-white/person_add.svg" alt="check" class="new-contact-icon" />
   </button>
+
   <div class="contact-list">
-    @if (contacts.length === 0) {
-    } @else {
-      @for (group of groupedContacts | keyvalue; track group.key) {
-        <div class="group-header">{{ group.key }}</div>
-        @for (contact of group.value; track contact.email) {
+    <ng-container *ngIf="(groupedContacts$ | async) as groupedContacts; else loading">
+      <div *ngIf="!groupedContacts || (getKeys(groupedContacts).length === 0)">
+        <p>No contacts found.</p>
+      </div>
+      <ng-container *ngIf="groupedContacts && getKeys(groupedContacts).length > 0">
+        <ng-container *ngFor="let group of groupedContacts | keyvalue">
+          <div class="group-header">{{ group.key }}</div>
+          <ng-container *ngFor="let contact of group.value">
             <div class="contact-item"
-                 [class.selected]="selectedContact && selectedContact.email === contact.email"
-                 (click)="selectContact(contact)">
-              <div class="circle" [style.background-color]="getContactColor(contact)">{{ getInitials(contact.name) }}</div>
-            <div class="info">
-              <div class="name">{{ contact.name }}</div>
-              <div class="email">{{ contact.email }}</div>
+                [class.selected]="selectedContact?.email === contact.email"
+                (click)="selectContact(contact)">
+              <div class="circle" [style.background-color]="getContactColor(contact)">
+                {{ getInitials(contact.name) }}
+              </div>
+              <div class="info">
+                <div class="name">{{ contact.name }}</div>
+                <div class="email">{{ contact.email }}</div>
+              </div>
             </div>
-          </div>
-        }
-      }
-    }
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-template #loading>
+      <p>Loading contacts...</p>
+    </ng-template>
   </div>
 </div>
   <section class="contacts-detail-container" [ngClass]="mobileClass">
     <div class="contacts-info-container" [ngClass]="mobileClass">
-      <h1 class="line-seperator">Contacts</h1>
+      <h2>Contacts</h2>
+      <div class="contacts-info-line">
+        <img src="/img/Card_Contacts/Vector.png" alt="Contacts vector image">
+      </div>
       <h3 class="subheadline">Better with a team</h3>
     </div>
+
     @if (selectedContact) {
     <div>
       <button class="back-button" [class.mobile-only]="true" (click)="closeContactDetails()">
           <img src="/icons/arrow-left.svg" alt="">
-      </button> 
+      </button>
     </div>
     <div class="contacts-detail">
       <div class="circle-initial" [ngClass]="mobileClass">
         <div class="circle-user" [style.background-color]="getContactColor(selectedContact)">{{ getInitials(selectedContact.name) }}</div>
         <div class="alignment" [ngClass]="mobileClass">
         <h2>{{ selectedContact.name }}</h2>
+
           <div class="button-group" [ngClass]="mobileClass">
             <div class="iconsbefore edit">
               <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" class="icon-edit" viewBox="0 0 19 19" fill="none">
@@ -56,10 +71,13 @@
           </div>
         </div>
       </div>
+
           <div class="contacts-information" [ngClass]="mobileClass">
             <h3>Contact Information</h3>
+
             <h4 class="email-link">Email</h4>
             <a href="#">{{ selectedContact.email }}</a>
+
             <h4>Phone</h4>
             <p>{{ selectedContact.phone }}</p>
           </div>

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, updateDoc, deleteDoc, addDoc } from '@angular/fire/firestore';
 import { Contact } from '../interfaces/contact.interface';
 import { Observable } from 'rxjs';
 
@@ -10,6 +10,10 @@ export class ContactService {
 
   getContacts(): Observable<Contact[]> {
     return collectionData(this.contactsRef, { idField: 'id' }) as Observable<Contact[]>;
+  }
+
+  addContact(contact: Contact) {
+    return addDoc(this.contactsRef, contact);
   }
 
   updateContact(contact: Contact): void {

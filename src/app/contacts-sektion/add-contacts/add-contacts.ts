@@ -84,20 +84,23 @@ export class AddContacts implements OnDestroy {
     this.breakpointSubscription.unsubscribe();
   }
 
-  openPopup(): void {
-    this.contactForm.reset();
+  closePopup(): void {
+    this.close.emit(); 
   }
 
-  closePopup(): void {
-    console.log('add-contat close overlay');
+  onCancel(): void {
+    console.log('Contact creation canceled');
+    this.cancel.emit(); 
+  }
+
+  onClose(): void {
+    console.log('Add contact overlay closed');
     this.close.emit();
   }
 
   onSubmit(): void {
     if (this.contactForm.invalid) return;
-
     const contact: Contact = this.contactForm.value;
-
     this.contactService.addContact(contact).subscribe({
       next: () => {
         console.log('contact added', contact);

@@ -7,7 +7,10 @@ import { ContactService } from '../../../shared/services/contact.service';
 
 @Component({
   selector: 'app-edit-contact',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule
+  ],
   templateUrl: './edit-contact.html',
   styleUrl: './edit-contact.scss'
 })

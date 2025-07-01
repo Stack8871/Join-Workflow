@@ -12,9 +12,9 @@ import {
 @Injectable({
   providedIn: 'root',
 })
+
 export class AuthService {
   private auth = inject(Auth);
-
   private userSignal = signal<User | null>(null);
   readonly currentUser = computed(() => this.userSignal());
   readonly isAuthenticated = computed(() => !!this.userSignal());

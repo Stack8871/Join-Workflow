@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ContactService } from '../../services/contact.service';
+import { ContactService } from '../../../shared/services/contact.service';
 
 @Component({
   selector: 'app-edit-contact',

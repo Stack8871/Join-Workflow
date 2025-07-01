@@ -1,54 +1,58 @@
 import { Component, OnInit, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContactService } from '../../services/contact.service';
-import { ColorService } from '../../services/color.service';
+import { ContactService } from '../../../shared/services/contact.service';
+import { ColorService } from '../../../shared/services/color.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Contact } from '../../interfaces/contact.interface';
+import { Contact } from '../../../shared/interfaces/contact.interface';
 import { Firestore, doc, updateDoc, deleteDoc, collection } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { collectionData } from '@angular/fire/firestore';
 import { AddContacts } from '../add-contacts/add-contacts';
+import { isAddOpen } from '../../../shared/ui/ui-signals/ui-signals';
+import { EditContact } from '../edit-contact/edit-contact';
+import { UiStateService } from '../../../shared/services/ui-state.service';
 
 @Component({
   selector: 'app-contacts',
   standalone: true,
   imports: [
     CommonModule,
-    AddContacts
+    AddContacts,
+    EditContact
+  
   ],
   templateUrl: './contacts.html',
   styleUrls: ['./contacts.scss']
 })
 
 export class Contacts implements OnInit, OnDestroy {
+  isAddOpen = isAddOpen;
   contacts$: Observable<Contact[]>;
-
   public contacts: Contact[] = [];
-
   contactForm!: FormGroup;
-
-  isAddOpen: WritableSignal<boolean> = signal(false);
   selectedContact: Contact | null = null;
   isMobile: WritableSignal<boolean> = signal(false);
   showMobileDetails: WritableSignal<boolean> = signal(false);
-
   private destroy$ = new Subject<void>();
   private breakpointSubscription: Subscription;
-
   groupedContacts$: Observable<Record<string, Contact[]>>;
+  addContactOpen$!: Observable<boolean>;
+  editContactOpen$!: Observable<boolean>;
 
   constructor(
     private firestore: Firestore,
     private fb: FormBuilder,
     private contactsService: ContactService,
     private colorService: ColorService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    public uiState: UiStateService
   ) {
+    this.addContactOpen$ = this.uiState.isOverlayOpen('add-contacts');
+    this.editContactOpen$ = this.uiState.isOverlayOpen('edit-contact');
     const contactsRef = collection(this.firestore, 'contacts');
     this.contacts$ = collectionData(contactsRef, { idField: 'id' }) as Observable<Contact[]>;
-
     this.groupedContacts$ = this.contacts$.pipe(
       map(contacts => {
         return contacts.reduce((acc: Record<string, Contact[]>, contact: Contact) => {
@@ -98,18 +102,17 @@ export class Contacts implements OnInit, OnDestroy {
     return this.showMobileDetails() ? 'mobile show-details' : 'mobile';
   }
 
-  openPopup(): void {
-    this.isAddOpen.set(true);
+
+  openAddContact() {
+    this.uiState.openOverlay('add-contact');
   }
 
-  closeAddPopup(): void {
-    console.log('close overlay clicked');
-    this.isAddOpen.set(false);
+  openEditContact() {
+    this.uiState.openOverlay('edit-contact');
   }
 
-  onClosePopup() {
-    console.log('onClosePopup');
-    this.isAddOpen.set(false);
+  closeOverlay() {
+    this.uiState.closeOverlay();
   }
 
   selectContact(contact: Contact): void {

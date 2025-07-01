@@ -1,6 +1,6 @@
 <div class="contacts-page-container" [ngClass]="mobileClass">
   <div class="contact-container" [ngClass]="mobileClass">
-  <button class="add-contact-btn" (click)="openPopup()">
+  <button class="add-contact-btn" (click)="openAddContact()">
     Add new contact
     <img src="/icons-white/person_add.svg" alt="check" class="new-contact-icon" />
   </button>
@@ -86,4 +86,10 @@
   </section>
 </div>
 
-<app-add-contacts *ngIf="isAddOpen()" (close)="onClosePopup()"></app-add-contacts>
+<app-add-contacts 
+  *ngIf="addContactOpen$ | async"
+  (cancel)="closeOverlay()" 
+  (close)="closeOverlay()" 
+  (submit)="onSubmit()"
+></app-add-contacts>
+<app-edit-contact *ngIf="(uiState.openOverlay$ | async) === 'edit-contact'"></app-edit-contact>

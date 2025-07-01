@@ -2,22 +2,30 @@ import { Component, NgZone, OnDestroy, signal, WritableSignal } from '@angular/c
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { ContactService } from '../../services/contact.service';
+import { ContactService } from '../../../shared/services/contact.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Output, EventEmitter } from '@angular/core';
-import { Contact } from '../../interfaces/contact.interface';
-
+import { Contact } from '../../../shared/interfaces/contact.interface';
+import { isAddOpen } from '../../../shared/ui/ui-signals/ui-signals';
 
 @Component({
   selector: 'app-add-contacts',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule,
+  
+  ],
   templateUrl: './add-contacts.html',
   styleUrls: ['./add-contacts.scss']
 })
+
 export class AddContacts implements OnDestroy {
+  isAddOpen = isAddOpen;
   isMobile: WritableSignal<boolean> = signal(false);
   @Output() close = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
+  @Output() submit = new EventEmitter<Contact>();
   contactForm: FormGroup;
   private breakpointSubscription: Subscription;
 
@@ -25,7 +33,7 @@ export class AddContacts implements OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private contactService: ContactService,
     private fb: FormBuilder,
-    private ngZone: NgZone
+    private ngZone: NgZone,
   ) {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],

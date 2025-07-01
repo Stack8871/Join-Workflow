@@ -86,9 +86,9 @@ export class AddContacts implements OnDestroy {
 
   onSubmit(): void {
     if (this.contactForm.invalid) return;
-    const contact: Contact = this.contactForm.value;
-    console.log('AddContacts emitting:', contact);
-    this.submit.emit(contact); 
+    const newcontact: Contact = this.contactForm.value;
+    console.log('AddContacts emitting:', newcontact);
+    this.submit.emit(newcontact); 
   } 
 
   closePopup(): void {

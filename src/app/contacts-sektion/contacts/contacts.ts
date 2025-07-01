@@ -104,6 +104,7 @@ export class Contacts implements OnInit, OnDestroy {
   }
 
   closeOverlay(): void {
+    console.log('closeOverlay triggered!!!!')
     this.uiState.closeOverlay();
   }
 
@@ -162,11 +163,12 @@ export class Contacts implements OnInit, OnDestroy {
     return obj ? Object.keys(obj) : [];
   }
 
-  handleSubmit(contact: Contact): void {
-    console.log('Received contact in parent:', contact);
-    this.contactsService.addContact(contact).subscribe({
+  handleSubmit(newContact: Contact): void {
+    console.log('contacts.ts received:', newContact);
+    this.contactsService.addContact(newContact).subscribe({
       next: () => {
-        console.log('Contact successfully saved by parent:', contact);
+        console.log('Contact successfully saved by parent:', newContact);
+        console.log('Calling closeOverlay now');
         this.closeOverlay();
       },
       error: (err: any) => {

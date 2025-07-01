@@ -13,17 +13,19 @@ export class ContactService {
     return collectionData(this.contactsRef, { idField: 'id' }) as Observable<Contact[]>;
   }
 
-  addContact(contact: Contact): Observable<void> {
-    return from(
-      new Promise<void>((resolve, reject) => {
-        this.ngZone.run(() => {
-          addDoc(this.contactsRef, contact)
-            .then(() => resolve())
-            .catch(reject);
-        });
+addContact(contact: Contact): Observable<void> {
+  console.log('addContact called with', contact);
+  return from(
+    addDoc(this.contactsRef, contact)
+      .then(() => {
+        console.log('Firestore addDoc succeeded');
       })
-    );
-  }
+      .catch(err => {
+        console.error('Firestore addDoc error:', err);
+        throw err;
+      })
+  );
+}
 
   updateContact(contact: Contact): Observable<void> {
     if (!contact.id) return from(Promise.resolve());

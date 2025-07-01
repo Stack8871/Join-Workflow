@@ -3,7 +3,6 @@
 @use "sass:list";
 @use 'functions' as *;
 @use 'variables' as *;
-
 @font-face {
   font-family: 'Inter';
   src: url('/font/Inter-VariableFont_opsz,wght.ttf') format('truetype');
@@ -11,7 +10,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 html {
   @for $i from 1 through list.length($type-steps) {
     $step: list.nth($type-steps, $i);
@@ -32,3 +30,6 @@ $font-family-base: 'Inter', sans-serif;
 $font-weight-bold: 700;
 $font-weight-semi: 600;
 $font-weight-regular: 400;
+h1{
+  font-size: var(--font-size-2xl);
+}

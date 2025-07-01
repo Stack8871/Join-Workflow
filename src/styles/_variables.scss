@@ -15,16 +15,16 @@ $breakpoint-xl: 1440px;
 
 $max-width: 1440px;
 
-// 🎨 Farben
+// Farben
 // --------------------------------------------------
 
 $color-primary: #2a3647;
 $color-primary-dark: #1f2a3c;
 $color-blue-dark: #091931;
 $color-gray: #CDCDCD;  
-$color-light-gray: #f6f7f8;
-$color-mid-gray: #d2cfcf;
-$color-drak-gray: #a8a8a8;
+$color-lighter-gray: #f6f7f8;
+$color-light-gray: #d2cfcf;
+$color-medium-gray: #a8a8a8;
 $color-white: #fff;
 $color-black: #000000;
 $color-border: $color-gray;
@@ -34,12 +34,12 @@ $color-accent-urgent: #ff3d00;
 $color-accent-medium: #ffa800;
 $color-accent-low: #7ae229;
 $color-badge-userstory: #0038ff;
-$color-badge-technical: $color-mid-gray;
+$color-badge-technical: $color-medium-gray;
 $color-subtask-bar: #29abe2;
 $color-muted: #6b6b6b;
 
 // Hintergründe
-$color-bg-light: $color-light-gray;
+$color-bg-light: $color-lighter-gray;
 $color-bg-sidebar: $color-primary;
 $color-bg-card: $color-white;
 $color-bg-overlay: rgba(0, 0, 0, 0.5);
@@ -47,7 +47,7 @@ $color-bg-overlay: rgba(0, 0, 0, 0.5);
 // Textfarben
 $color-text-heading: $color-black;
 $color-text-muted: $color-muted;
-$color-text-subtask: $color-mid-gray;
+$color-text-subtask: $color-medium-gray;
 
 // Avatare (Beispiele)
 $color-avatar-1: #ff7a00;

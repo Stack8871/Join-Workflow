@@ -1,75 +1,65 @@
 @use 'index' as *;
 body{
     font-family: $font-family-base;
+    font-weight: $font-weight-regular;
 }
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto auto;
   height: 100svh;
-  max-width: $max-width;
-}
- header{
-    max-height:85px;
- }
-.sidebar{
-    max-width: 14.5rem;
 }
 
-@media (max-width < 768px) {
-  .grid-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-  }
-}
+
 header {
   grid-column: 1 / 4;
   grid-row: 1;
   color:$color-gray ;
-  padding-top: 1rem;
   font-size: 1.5rem;
   height: 65px;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid rgba(51, 51, 51, 0.11);
+  box-shadow: $header-shadow;
+
 }
 
 .sidebar {
   grid-column: 1;
   grid-row: 1 / 3;
   color: $color-gray;
+  background: $color-primary;
+  max-width:232px;
 }
 
-.content-container {
-  grid-column: 2 / 4;
-  grid-row: 2;
-
-  padding: 1rem;
+.wrapper {
+width:99svw;
+display: flex;
+justify-content: flex-start;
 }
 .content{
-display: flex;
-flex-wrap: wrap;
+max-width:1440;
+
 }
 .left-container{
   flex:1;
 }
 .right-container{
   flex:2;
-
 }
+
 @media (max-width < 768px) {
   .grid-container {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
   }
-
   .header {
     grid-column: 1;
     grid-row: 1;
   }
-
   .sidebar {
     grid-column: 1;
     grid-row: 2;
   }
-
   .content-container{
     grid-column: 1;
     grid-row: 3;
@@ -82,7 +72,6 @@ flex-wrap: wrap;
   margin: 0 auto;
   font-family: sans-serif;
 }
-
 .contact-list > li {
   margin-bottom: 2rem;
 }

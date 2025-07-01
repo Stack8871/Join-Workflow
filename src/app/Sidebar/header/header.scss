@@ -1,21 +1,13 @@
 @use 'index' as *;
-/* @use '../../../style/flexbox.scss' as *; */
 
 /* =====================================
    =            Header Desktop           =
    ===================================== */
 .site-header {
  @include space;
-
-  position: fixed;
-  top: 0;
-  left: 232px;
-  right: 0;
-  z-index: 10;
-  background-color: #f8f9fa;
-  padding: $spacing-base $spacing-xl;
-  border-bottom: 2px solid rgba(51, 51, 51, 0.11);
-  box-shadow: $header-shadow;
+  max-width: $max-width;
+  align-items: center;
+  height:65px
 }
 .header-inner {
   max-width: $max-width;
@@ -29,13 +21,12 @@
   font-size: var(--font-size-md);
   color: $color-black;
   font-weight:400;
-
+  padding-left: 16.5rem;
 }
 .circle-section {
   display: flex;
   gap: $spacing-xs;
   align-items: center;
-
   .circle-help, .circle-user {
     border-radius: 50%;
     background-color: transparent;
@@ -45,6 +36,11 @@
     width: 35px;
     height: 35px;
     text-align: center;
+    margin-right: 2rem;
+    color:$color-medium-gray;
+    &:hover{
+      background:$color-lighter-gray;
+    }
   }
     .circle-help{
       border: 2px $color-gray solid;
@@ -53,7 +49,6 @@
       text-align: center;
       font-size: var(--font-size-sm);
   }
-  
 }
 /* =====================================
    =            Header Mobil           =

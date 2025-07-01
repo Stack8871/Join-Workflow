@@ -73,7 +73,6 @@ export class Contacts implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initForm();
-
     this.contacts$.subscribe(contacts => {
       this.contacts = contacts;
       this.assignColorsToContacts();
@@ -102,16 +101,18 @@ export class Contacts implements OnInit, OnDestroy {
     return this.showMobileDetails() ? 'mobile show-details' : 'mobile';
   }
 
-
   openAddContact() {
-    this.uiState.openOverlay('add-contact');
+    console.log('openAddContact triggered!');
+    this.uiState.openOverlay('add-contacts');
   }
 
   openEditContact() {
+    console.log('openEditContact triggered!');
     this.uiState.openOverlay('edit-contact');
   }
 
   closeOverlay() {
+    console.log('closeOverlay triggered!');
     this.uiState.closeOverlay();
   }
 
@@ -177,5 +178,17 @@ export class Contacts implements OnInit, OnDestroy {
 
   getKeys(obj: Record<string, Contact[]> | null): string[] {
     return obj ? Object.keys(obj) : [];
+  }
+
+  handleSubmit(contact: Contact): void {
+    this.contactsService.addContact(contact).subscribe({
+      next: () => {
+        console.log('Contact successfully saved by parent:', contact);
+        this.closeOverlay();
+      },
+      error: (err: any) => {
+        console.error('Error while saving contact in parent:', err);
+      }
+    });
   }
 }

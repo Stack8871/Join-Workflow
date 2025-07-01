@@ -9,9 +9,10 @@ export class UiStateService {
     return this._openOverlay$.asObservable();
   }
 
-  openOverlay(name: string): void {
+    openOverlay(name: string): void {
+    console.log('openOverlay called with', name);
     this._openOverlay$.next(name);
-  }
+    }
 
   closeOverlay(): void {
     this._openOverlay$.next(null);

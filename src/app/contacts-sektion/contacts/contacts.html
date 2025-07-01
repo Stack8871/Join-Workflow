@@ -90,6 +90,6 @@
   *ngIf="addContactOpen$ | async"
   (cancel)="closeOverlay()"
   (close)="closeOverlay()"
-  (submit)="onSubmit()"
+  (submit)="handleSubmit($event)"
 ></app-add-contacts>
 <app-edit-contact *ngIf="(uiState.openOverlay$ | async) === 'edit-contact'"></app-edit-contact>

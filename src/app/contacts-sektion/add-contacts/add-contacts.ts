@@ -6,7 +6,7 @@ import { ContactService } from '../../../shared/services/contact.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Output, EventEmitter } from '@angular/core';
 import { Contact } from '../../../shared/interfaces/contact.interface';
-import { isAddOpen } from '../../../shared/ui/ui-signals/ui-signals';
+import { UiStateService } from '../../../shared/services/ui-state.service';
 
 @Component({
   selector: 'app-add-contacts',
@@ -21,7 +21,6 @@ import { isAddOpen } from '../../../shared/ui/ui-signals/ui-signals';
 })
 
 export class AddContacts implements OnDestroy {
-  isAddOpen = isAddOpen;
   isMobile: WritableSignal<boolean> = signal(false);
   @Output() close = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
@@ -34,6 +33,7 @@ export class AddContacts implements OnDestroy {
     private contactService: ContactService,
     private fb: FormBuilder,
     private ngZone: NgZone,
+    public uiState: UiStateService
   ) {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
@@ -84,33 +84,14 @@ export class AddContacts implements OnDestroy {
     this.breakpointSubscription.unsubscribe();
   }
 
-  closePopup(): void {
-    this.close.emit(); 
-  }
-
-  onCancel(): void {
-    console.log('Contact creation canceled');
-    this.cancel.emit(); 
-  }
-
-  onClose(): void {
-    console.log('Add contact overlay closed');
-    this.close.emit();
-  }
-
   onSubmit(): void {
     if (this.contactForm.invalid) return;
     const contact: Contact = this.contactForm.value;
-    this.contactService.addContact(contact).subscribe({
-      next: () => {
-        console.log('contact added', contact);
-        console.log()
-        this.contactForm.reset();
-        this.closePopup();
-      },
-      error: (err) => {
-            console.error('Error adding contact:', err);
-          }
-    });
+    console.log('AddContacts emitting:', contact);
+    this.submit.emit(contact); 
+  } 
+
+  closePopup(): void {
+    this.uiState.closeOverlay();
   }
 }

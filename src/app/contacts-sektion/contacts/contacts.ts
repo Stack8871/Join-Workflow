@@ -10,7 +10,6 @@ import { Firestore, doc, updateDoc, deleteDoc, collection } from '@angular/fire/
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { collectionData } from '@angular/fire/firestore';
 import { AddContacts } from '../add-contacts/add-contacts';
-import { isAddOpen } from '../../../shared/ui/ui-signals/ui-signals';
 import { EditContact } from '../edit-contact/edit-contact';
 import { UiStateService } from '../../../shared/services/ui-state.service';
 
@@ -28,7 +27,6 @@ import { UiStateService } from '../../../shared/services/ui-state.service';
 })
 
 export class Contacts implements OnInit, OnDestroy {
-  isAddOpen = isAddOpen;
   contacts$: Observable<Contact[]>;
   public contacts: Contact[] = [];
   contactForm!: FormGroup;
@@ -102,17 +100,10 @@ export class Contacts implements OnInit, OnDestroy {
   }
 
   openAddContact() {
-    console.log('openAddContact triggered!');
     this.uiState.openOverlay('add-contacts');
   }
 
-  openEditContact() {
-    console.log('openEditContact triggered!');
-    this.uiState.openOverlay('edit-contact');
-  }
-
-  closeOverlay() {
-    console.log('closeOverlay triggered!');
+  closeOverlay(): void {
     this.uiState.closeOverlay();
   }
 
@@ -149,7 +140,6 @@ export class Contacts implements OnInit, OnDestroy {
 
   updateDoc(contact: Contact): void {
     if (!contact.id) return;
-
     const docRef = doc(this.firestore, `contacts/${contact.id}`);
     updateDoc(docRef, {
       name: contact.name,
@@ -168,19 +158,12 @@ export class Contacts implements OnInit, OnDestroy {
     deleteDoc(docRef);
   }
 
-  saveContact(): void {
-    if (this.contactForm.invalid) return;
-    const contact: Contact = this.contactForm.value;
-    this.contactsService.addContact(contact);
-    this.contactForm.reset();
-    this.isAddOpen.set(false);
-  }
-
   getKeys(obj: Record<string, Contact[]> | null): string[] {
     return obj ? Object.keys(obj) : [];
   }
 
   handleSubmit(contact: Contact): void {
+    console.log('Received contact in parent:', contact);
     this.contactsService.addContact(contact).subscribe({
       next: () => {
         console.log('Contact successfully saved by parent:', contact);

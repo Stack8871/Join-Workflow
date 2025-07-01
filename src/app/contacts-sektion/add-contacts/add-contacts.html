@@ -1,4 +1,4 @@
-@if (isAddOpen()) {
+@if ((uiState.openOverlay$ | async) === 'add-contacts') {
         <section class="section-overlay" [ngClass]="mobileClass">
             <div class="card-wrapper" [ngClass]="mobileClass">
                 <div class="close-btn" (click)="closePopup()">

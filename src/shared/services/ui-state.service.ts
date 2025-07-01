@@ -10,7 +10,6 @@ export class UiStateService {
   }
 
     openOverlay(name: string): void {
-    console.log('openOverlay called with', name);
     this._openOverlay$.next(name);
     }
 

@@ -71,6 +71,12 @@
       font-size: var(--font-size-base);
       color: $color-text-heading;
     }
+
+    .validation-message {
+      color: #FF0000;
+      font-size: var(--font-size-sm);
+      margin-top: 4px;
+    }
   }
 
   .input-group {
@@ -124,11 +130,6 @@
       }
     }
 
-    .validation-message {
-      color: #F44336;
-      font-size: var(--font-size-sm);
-      margin-top: 4px;
-    }
   }
 
   .priority-buttons {

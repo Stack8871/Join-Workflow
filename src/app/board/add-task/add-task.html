@@ -14,9 +14,9 @@
               placeholder="Enter a title"
               [ngClass]="{'valid-field': isFieldValid('title'), 'invalid-field': isFieldInvalid('title')}"
             >
-            <div *ngIf="isFieldInvalid('title')" class="validation-message">
-              {{ getValidationMessage('title') }}
-            </div>
+          </div>
+          <div *ngIf="isFieldInvalid('title')" class="validation-message">
+            {{ getValidationMessage('title') }}
           </div>
         </div>
 
@@ -29,48 +29,12 @@
               placeholder="Enter a description"
               [ngClass]="{'valid-field': isFieldValid('description'), 'invalid-field': isFieldInvalid('description')}"
             ></textarea>
-            <div *ngIf="isFieldInvalid('description')" class="validation-message">
-              {{ getValidationMessage('description') }}
-            </div>
+          </div>
+          <div *ngIf="isFieldInvalid('description')" class="validation-message">
+            {{ getValidationMessage('description') }}
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="category">Category</label>
-          <div class="input-group">
-            <input
-              type="text"
-              id="category"
-              formControlName="category"
-              placeholder="Enter a category"
-              [ngClass]="{'valid-field': isFieldValid('category'), 'invalid-field': isFieldInvalid('category')}"
-            >
-            <div *ngIf="isFieldInvalid('category')" class="validation-message">
-              {{ getValidationMessage('category') }}
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="subtask">Subtask</label>
-          <div class="input-group">
-            <input
-              type="text"
-              id="subtask"
-              formControlName="subtask"
-              placeholder="Add new subtask"
-              [ngClass]="{'valid-field': isFieldValid('subtask'), 'invalid-field': isFieldInvalid('subtask')}"
-            >
-            <div *ngIf="isFieldInvalid('subtask')" class="validation-message">
-              {{ getValidationMessage('subtask') }}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="vertical-divider"></div>
-
-      <div class="right-side">
         <div class="form-group">
           <label for="dueDate">Due Date</label>
           <div class="input-group date-input">
@@ -80,12 +44,16 @@
               formControlName="dueDate"
               [ngClass]="{'valid-field': isFieldValid('dueDate'), 'invalid-field': isFieldInvalid('dueDate')}"
             >
-            <div *ngIf="isFieldInvalid('dueDate')" class="validation-message">
-              {{ getValidationMessage('dueDate') }}
-            </div>
+          </div>
+          <div *ngIf="isFieldInvalid('dueDate')" class="validation-message">
+            {{ getValidationMessage('dueDate') }}
           </div>
         </div>
+      </div>
 
+      <div class="vertical-divider"></div>
+
+      <div class="right-side">
         <div class="form-group">
           <label>Priority</label>
           <div class="priority-buttons">
@@ -126,9 +94,41 @@
               placeholder="Select contacts to assign"
               [ngClass]="{'valid-field': isFieldValid('assignedTo'), 'invalid-field': isFieldInvalid('assignedTo')}"
             >
-            <div *ngIf="isFieldInvalid('assignedTo')" class="validation-message">
-              {{ getValidationMessage('assignedTo') }}
-            </div>
+          </div>
+          <div *ngIf="isFieldInvalid('assignedTo')" class="validation-message">
+            {{ getValidationMessage('assignedTo') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category</label>
+          <div class="input-group">
+            <input
+              type="text"
+              id="category"
+              formControlName="category"
+              placeholder="Enter a category"
+              [ngClass]="{'valid-field': isFieldValid('category'), 'invalid-field': isFieldInvalid('category')}"
+            >
+          </div>
+          <div *ngIf="isFieldInvalid('category')" class="validation-message">
+            {{ getValidationMessage('category') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="subtask">Subtask</label>
+          <div class="input-group">
+            <input
+              type="text"
+              id="subtask"
+              formControlName="subtask"
+              placeholder="Add new subtask"
+              [ngClass]="{'valid-field': isFieldValid('subtask'), 'invalid-field': isFieldInvalid('subtask')}"
+            >
+          </div>
+          <div *ngIf="isFieldInvalid('subtask')" class="validation-message">
+            {{ getValidationMessage('subtask') }}
           </div>
         </div>
       </div>

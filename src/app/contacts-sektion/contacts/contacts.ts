@@ -163,9 +163,11 @@ export class Contacts implements OnInit, OnDestroy {
     return obj ? Object.keys(obj) : [];
   }
 
-  handleSubmit(newContact: Contact): void {
+  async handleSubmit(newContact: Contact): Promise<void> {
+    console.log('hello world', newContact)
+    /*if (newContact){
     console.log('contacts.ts received:', newContact);
-    this.contactsService.addContact(newContact).subscribe({
+    (await this.contactsService.addContact(newContact)).subscribe({
       next: () => {
         console.log('Contact successfully saved by parent:', newContact);
         console.log('Calling closeOverlay now');
@@ -175,5 +177,6 @@ export class Contacts implements OnInit, OnDestroy {
         console.error('Error while saving contact in parent:', err);
       }
     });
+  }*/
   }
 }

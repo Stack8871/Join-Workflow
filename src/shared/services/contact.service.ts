@@ -13,7 +13,7 @@ export class ContactService {
     return collectionData(this.contactsRef, { idField: 'id' }) as Observable<Contact[]>;
   }
 
-addContact(contact: Contact): Observable<void> {
+ async addContact(contact: Contact): Promise<Observable<void>> {
   console.log('addContact called with', contact);
   return from(
     addDoc(this.contactsRef, contact)
@@ -27,7 +27,7 @@ addContact(contact: Contact): Observable<void> {
   );
 }
 
-  updateContact(contact: Contact): Observable<void> {
+  async updateContact(contact: Contact): Promise<Observable<void>> {
     if (!contact.id) return from(Promise.resolve());
     const docRef = doc(this.firestore, `contacts/${contact.id}`);
     return from(
@@ -46,7 +46,7 @@ addContact(contact: Contact): Observable<void> {
     );
   }
 
-  deleteContact(contactId: string): Observable<void> {
+  async deleteContact(contactId: string): Promise<Observable<void>> {
     const docRef = doc(this.firestore, `contacts/${contactId}`);
     return from(
       new Promise<void>((resolve, reject) => {

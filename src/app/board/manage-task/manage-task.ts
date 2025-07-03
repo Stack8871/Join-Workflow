@@ -23,6 +23,7 @@ export class ManageTask {
   inProgress = ['Task C'];
   feedback = ['Task D'];
   done = ['Task E'];
+    isOpen = false;
 
   columns = [
     { title: 'To Do', id: 'todoList', tasks: this.todo },
@@ -51,4 +52,11 @@ export class ManageTask {
       );
     }
   }
+    openPopup(): void {
+    this.isOpen = true;
+  }
+    closePopup(): void {
+    this.isOpen = false;
+  }
+
 }

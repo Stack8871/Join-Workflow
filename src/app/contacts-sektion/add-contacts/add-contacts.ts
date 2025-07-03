@@ -90,9 +90,19 @@ export class AddContacts implements OnDestroy {
     console.log('AddContacts emitting:', newcontact);
     //this.submit.emit(newcontact); 
     this.contactService.addContact(newcontact);
+    this.contactForm.reset();
+    this.close.emit();          
+    this.uiState.closeOverlay();
   } 
 
-  closePopup(): void {
+  onCancel(): void {
+    this.contactForm.reset();   
+    this.cancel.emit();         
+    this.uiState.closeOverlay();
+  }
+
+  onClose(): void {
+    this.close.emit();          
     this.uiState.closeOverlay();
   }
 }

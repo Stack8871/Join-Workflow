@@ -1,7 +1,7 @@
 @if ((uiState.openOverlay$ | async) === 'add-contacts') {
         <section class="section-overlay" [ngClass]="mobileClass">
             <div class="card-wrapper" [ngClass]="mobileClass">
-                <div class="close-btn" (click)="closePopup()">
+                <div class="close-btn" (click)="onClose()">
                     <span class="close-sign">X</span>
                 </div>
                 <div class="left-container" [ngClass]="mobileClass">
@@ -56,8 +56,8 @@
                                     </div>
                                 </div>
                                 <div class="button-group" [ngClass]="mobileClass">
-                                    <button type="button" class="cancel-btn" [ngClass]="mobileClass" (click)="closePopup()">Cancel</button>
-                                    <button type="submit" class="create-btn" [disabled]="contactForm.invalid">Create</button>
+                                    <button type="button" class="cancel-btn" [ngClass]="mobileClass" (click)="onCancel()">Cancel</button>
+                                    <button type="submit" class="create-btn" [disabled]="contactForm.invalid" (click)="onSubmit()">Create</button>
                                 </div>
                             </form>
                         </div>

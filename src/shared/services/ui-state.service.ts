@@ -10,14 +10,27 @@ export class UiStateService {
   }
 
     openOverlay(name: string): void {
-    this._openOverlay$.next(name);
+        this._openOverlay$.next(name);
     }
 
   closeOverlay(): void {
     this._openOverlay$.next(null);
   }
 
+  cancelOverlay(): void {}
+
   isOverlayOpen(name: string): Observable<boolean> {
     return this._openOverlay$.pipe(map(open => open === name));
   }
+
+    closeOverlayIfOpen(name: string): void {
+        this._openOverlay$.pipe(
+            map(open => open === name)
+        ).subscribe(isOpen => {
+            if (isOpen) {
+            this.closeOverlay();
+            }
+        }).unsubscribe(); 
+    }
+
 }

@@ -135,14 +135,10 @@ color:$color-medium-gray;
   }
 }
         .button-group {
-          @include center-row-not-justify;
           width: 100%;
           gap: 1.25rem;
-
-          &.mobile {
-            justify-content: left;
-            margin-left: 0;
-          }
+          justify-content: center;
+          display: flex;
 
           button {
             padding: 0.5rem 2.5rem 0.5rem 1rem;
@@ -163,7 +159,6 @@ color:$color-medium-gray;
                 transform: translateY(-50%);
                 font-size: 1rem;
               }
-
               &:hover {
                 box-shadow:$card-shadow;
                 color: $color-subtask-bar;
@@ -191,6 +186,12 @@ color:$color-medium-gray;
             }
           }
         }
+@media (width < 767px){
+  .button-group {
+  flex-direction: column;
+  }
+}
+
   input {
     width: 100%;
     padding: $spacing-xs $spacing-xl $spacing-xs $spacing-xs;

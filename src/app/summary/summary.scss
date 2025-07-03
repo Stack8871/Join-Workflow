@@ -24,9 +24,6 @@
     max-width: 1440px;
 
 }
-.welcome{
-    padding:0;
-}
 .task-step-text{
     display:flex;
     justify-content: center;
@@ -37,7 +34,7 @@
 }
 .circle-primary-color{
  background: $color-primary;
- 
+
  &:hover{
      background: $color-white;
  }
@@ -102,7 +99,6 @@
     & h1{
         font-size: var(--font-size-2xl);
         margin: 0;
-        padding: 0 $spacing-base;
         display: inline-block;
     }
     & h2{
@@ -130,4 +126,7 @@
     height:100%;
     display:flex;
     flex-direction: column;
+    & h4{
+        font-weight: 300;
+    }
 }

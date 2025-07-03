@@ -40,17 +40,18 @@ $input-radius: 0.5rem;
     margin:$spacing-sm 0;
 }
 
-.subheadline {
+.line-seperator {
   position: relative;
   display: inline-block;
+  padding: 0 $spacing-base;
 
-  &::before {
+  &::after {
     content: "";
     position: absolute;
-    bottom: -8px; // Abstand zur Schrift
-    left: 0;
-    width: 25%;
-    border-bottom: 3px solid $color-subtask-bar;
+    top: 0px; // Abstand zur Schrift
+    right: 0;
+    height: 99%;
+    border-right: 3px solid $color-subtask-bar;
   }
 }
 .circle {

@@ -4,15 +4,17 @@ import {
   CdkDrag,
   DragDropModule,
   CdkDragDrop,
+  CdkDragPlaceholder,
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-manage-task',
   standalone: true,
-  imports: [CommonModule, DragDropModule],
+  imports: [CommonModule, DragDropModule, MatProgressBarModule, CdkDragPlaceholder],
   templateUrl: './manage-task.html',
   styleUrl: './manage-task.scss',
 })

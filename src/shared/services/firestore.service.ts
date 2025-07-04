@@ -13,15 +13,15 @@ import {
   DocumentData,
   UpdateData
 } from '@angular/fire/firestore';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirestoreService {
-
-  constructor(private firestore: Firestore) {}
+  private readonly firestore = inject(Firestore);
+  private readonly ngZone = inject(NgZone);
 
   getAll<T extends { id?: string }>(collectionPath: string, idField?: string): Observable<T[]> {
     const ref = collection(this.firestore, collectionPath) as CollectionReference<T>;
@@ -29,9 +29,9 @@ export class FirestoreService {
     return collectionData(ref, options as any) as Observable<T[]>;
   }
 
-  getById<T>(collectionPath: string, id: string): Observable<T & { id: string }> {
-    const ref = doc(this.firestore, collectionPath, id);
-    return docData(ref, { idField: 'id' }) as Observable<T & { id: string }>;
+  getById<T>(collectionPath: string, id: string): Observable<T> {
+    const docRef = doc(this.firestore, collectionPath, id);
+    return docData(docRef, { idField: 'id' }) as Observable<T>;
   }
 
   add<T>(collectionPath: string, data: T): Promise<DocumentReference<T>> {

@@ -1,15 +1,15 @@
 import { inject, Injectable, NgZone } from '@angular/core';
-import { Firestore, collection, collectionData, doc, updateDoc, deleteDoc, addDoc, CollectionReference, DocumentData } from '@angular/fire/firestore';
+import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
 import { Contact } from '../interfaces/contact.interface';
-import { BehaviorSubject, from, Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { FirestoreService } from './firestore.service';
 
 @Injectable({ providedIn: 'root' })
 export class ContactService {
   private readonly ngZone = inject(NgZone);
   private readonly firestoreService = inject(FirestoreService);
-
   private readonly collectionPath = 'contacts';
+  private readonly firestore = inject(Firestore);
 
   getContacts(): Observable<Contact[]> {
     return this.firestoreService.getAll<Contact>(this.collectionPath, 'id');
@@ -27,18 +27,21 @@ export class ContactService {
     );
   }
 
-  updateContact(contact: Contact): Observable<void> {
-    if (!contact.id) return from(Promise.resolve());
-    return from(new Promise<void>((resolve, reject) => {
-      this.ngZone.run(() => {
-        this.firestoreService.update<Contact>(this.collectionPath, contact.id!, {
-          name: contact.name,
-          email: contact.email,
-          phone: contact.phone || '',
-          color: contact.color || ''
-        }).then(resolve).catch(reject);
+
+  async updateContact(contact: Contact): Promise<void> {
+    if (!contact.id) return;
+    await this.ngZone.runOutsideAngular(async () => {
+      const ref = doc(this.firestore, 'contacts', contact.id!);
+      await updateDoc(ref, {
+        name: contact.name,
+        email: contact.email,
+        phone: contact.phone || '',
+        color: contact.color || ''
       });
-    }));
+      this.ngZone.run(() => {
+        console.log('Contact updated in Angular context.');
+      });
+    });
   }
 
   deleteContact(contactId: string): Observable<void> {

@@ -82,7 +82,7 @@ $input-radius: 0.5rem;
   &::after {
     content: "";
     position: absolute;
-    top: 0px; 
+    top: 0px;
     right: 0;
     height: 99%;
     border-right: 3px solid $color-subtask-bar;
@@ -96,7 +96,7 @@ $input-radius: 0.5rem;
   &::before {
     content: "";
     position: absolute;
-    bottom: -8px; 
+    bottom: -8px;
     left: 0;
     width: 25%;
     border-bottom: 0px solid $color-subtask-bar;
@@ -109,7 +109,7 @@ $input-radius: 0.5rem;
   .line-seperator{
     border-right: 0px solid $color-subtask-bar;
   }
- 
+
 }
 .circle {
   width: $spacing-2xl;

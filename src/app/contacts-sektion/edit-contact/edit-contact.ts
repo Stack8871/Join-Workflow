@@ -1,13 +1,14 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, signal, SimpleChanges, WritableSignal } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, signal, SimpleChanges, WritableSignal, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Subscription } from 'rxjs';
 import { ContactService } from '../../../shared/services/contact.service';
 import { Contact } from '../../../shared/interfaces/contact.interface';
 import { UiStateService } from '../../../shared/services/ui-state.service';
 import { doc, updateDoc } from 'firebase/firestore';
 import { FirestoreService } from '../../../shared/services/firestore.service';
+
 
 
 @Component({
@@ -35,6 +36,7 @@ export class EditContact implements OnDestroy, OnChanges, OnInit {
     private fb: FormBuilder,
     public uiState: UiStateService,
     private firestoreService: FirestoreService,
+    private ngZone: NgZone,
   ) {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
@@ -97,34 +99,29 @@ export class EditContact implements OnDestroy, OnChanges, OnInit {
     this.breakpointSubscription.unsubscribe();
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.contactForm.invalid || !this.selectedContact) return;
     const updatedContact: Contact = {
       ...this.selectedContact,
       ...this.contactForm.value
     };
-    this.contactService.updateContact(updatedContact).subscribe({
-      next: () => {
-        this.contactService.getContactById(updatedContact.id!).subscribe({
-          next: (changedContact) => {
-            this.selectedContact = changedContact;
-            this.contactForm.patchValue({
-              name: changedContact.name,
-              email: changedContact.email,
-              phone: changedContact.phone ?? ''
-            });
-            this.close.emit();
-            this.uiState.closeOverlay();
-          },
-          error: (error) => {
-            console.error('Aktualisierung des Kontakts fehlgeschlagen:', error);
-          }
+    try {
+      await this.contactService.updateContact(updatedContact);
+      const changedContact = await firstValueFrom(this.contactService.getContactById(updatedContact.id!));
+
+      this.ngZone.run(() => {
+        this.selectedContact = changedContact;
+        this.contactForm.patchValue({
+          name: changedContact.name,
+          email: changedContact.email,
+          phone: changedContact.phone ?? ''
         });
-      },
-      error: (error) => {
-        console.error('Update fehlgeschlagen:', error);
-      }
-    });
+        this.close.emit();
+        this.uiState.closeOverlay();
+      });
+    } catch (error: any) {
+      console.error('Update failed:', error);
+    }
   }
 
   onCancel(): void {

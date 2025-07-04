@@ -1,6 +1,6 @@
  <section class="section-overlay" [ngClass]="mobileClass">
             <div class="card-wrapper" [ngClass]="mobileClass">
-                <div class="close-btn" (click)="closePopup()">
+                <div class="close-btn" (click)="onClose()">
                     <span class="close-sign">X</span>
                 </div>
                 <div class="left-container" [ngClass]="mobileClass">
@@ -17,7 +17,7 @@
                     <div class="right-content">
                         <div class="contact-form" [ngClass]="mobileClass">
                             <div class="contact-avatar" [ngClass]="mobileClass">
-                                <img src="/icons-white/person.svg" alt="person" /> <!-- Icon einfügen -->
+                                <img src="/icons-white/person.svg" alt="person" />
                             </div>
                             <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
                                 <div class="input-group">
@@ -54,8 +54,8 @@
                                     </div>
                                 </div>
                                 <div class="button-group" [ngClass]="mobileClass">
-                                    <button type="button" class="cancel-btn" [ngClass]="mobileClass" (click)="closePopup()">Cancel</button>
-                                    <button type="submit" class="create-btn" [disabled]="contactForm.invalid">Save</button>
+                                    <button type="button" class="cancel-btn" [ngClass]="mobileClass" (click)="onCancel()">Cancel</button>
+                                    <button type="submit" class="create-btn" [disabled]="contactForm.invalid" (submit)="onSubmit()">Save</button>
                                 </div>
                             </form>
                         </div>

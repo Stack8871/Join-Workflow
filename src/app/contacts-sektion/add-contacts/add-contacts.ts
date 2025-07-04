@@ -27,6 +27,7 @@ export class AddContacts implements OnDestroy {
   @Output() submit = new EventEmitter<Contact>();
   contactForm: FormGroup;
   private breakpointSubscription: Subscription;
+  
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -86,7 +87,11 @@ export class AddContacts implements OnDestroy {
 
   onSubmit(): void {
     if (this.contactForm.invalid) return;
-    const newcontact: Contact = this.contactForm.value;
+    const newcontact: Contact = {
+      name: this.contactForm.value.name,
+      email: this.contactForm.value.email,
+      phone: this.contactForm.value.phone || ''
+    };
     console.log('AddContacts emitting:', newcontact);
     //this.submit.emit(newcontact); 
     this.contactService.addContact(newcontact);

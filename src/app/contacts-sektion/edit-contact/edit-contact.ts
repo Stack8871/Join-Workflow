@@ -1,9 +1,14 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, signal, WritableSignal } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, signal, SimpleChanges, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ContactService } from '../../../shared/services/contact.service';
+import { Contact } from '../../../shared/interfaces/contact.interface';
+import { UiStateService } from '../../../shared/services/ui-state.service';
+import { doc, updateDoc } from 'firebase/firestore';
+import { FirestoreService } from '../../../shared/services/firestore.service';
+
 
 @Component({
   selector: 'app-edit-contact',
@@ -12,19 +17,24 @@ import { ContactService } from '../../../shared/services/contact.service';
     ReactiveFormsModule
   ],
   templateUrl: './edit-contact.html',
-  styleUrl: './edit-contact.scss'
+  styleUrls: ['./edit-contact.scss']
 })
-export class EditContact {
-  isMobile: WritableSignal<boolean> = signal(false);
 
+export class EditContact implements OnDestroy, OnChanges, OnInit {
+  @Input() selectedContact: Contact | null = null;
+  isMobile: WritableSignal<boolean> = signal(false);
   @Output() close = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
+  @Output() submit = new EventEmitter<Contact>();
   contactForm: FormGroup;
   private breakpointSubscription: Subscription;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     private contactService: ContactService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public uiState: UiStateService,
+    private firestoreService: FirestoreService,
   ) {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
@@ -34,6 +44,18 @@ export class EditContact {
     this.breakpointSubscription = this.breakpointObserver
       .observe(['(max-width: 949px)'])
       .subscribe(result => this.isMobile.set(result.matches));
+  }
+
+  ngOnInit(): void {
+    this.editedContact$.subscribe(contact => {
+      if (contact) {
+        this.contactForm.patchValue({
+          name: contact.name,
+          email: contact.email,
+          phone: contact.phone ?? ''
+        });
+      }
+    });
   }
 
   private hasFieldState(fieldName: string, shouldBeValid: boolean): boolean {
@@ -75,22 +97,70 @@ export class EditContact {
     this.breakpointSubscription.unsubscribe();
   }
 
-  openPopup(): void {
-    this.contactForm.reset();
-  }
-
-  closePopup(): void {
-    this.close.emit();
-  }
-
   onSubmit(): void {
-    Object.keys(this.contactForm.controls).forEach(key => {
-      const control = this.contactForm.get(key);
-      control?.markAsTouched();
+    if (this.contactForm.invalid || !this.selectedContact) return;
+    const updatedContact: Contact = {
+      ...this.selectedContact,
+      ...this.contactForm.value
+    };
+    this.contactService.updateContact(updatedContact).subscribe({
+      next: () => {
+        this.contactService.getContactById(updatedContact.id!).subscribe({
+          next: (changedContact) => {
+            this.selectedContact = changedContact;
+            this.contactForm.patchValue({
+              name: changedContact.name,
+              email: changedContact.email,
+              phone: changedContact.phone ?? ''
+            });
+            this.close.emit();
+            this.uiState.closeOverlay();
+          },
+          error: (error) => {
+            console.error('Aktualisierung des Kontakts fehlgeschlagen:', error);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Update fehlgeschlagen:', error);
+      }
     });
-    if (this.contactForm.valid) {
-      console.log('Form submitted:', this.contactForm.value);
-      this.closePopup();
+  }
+
+  onCancel(): void {
+    if (this.selectedContact) {
+        this.contactForm.patchValue({
+          name: this.selectedContact.name,
+          email: this.selectedContact.email,
+          phone: this.selectedContact.phone ?? ''
+        });
+      } else {
+        this.contactForm.reset();
+      }
+      this.cancel.emit();
+      this.uiState.closeOverlay();
+  }
+
+  onClose(): void {
+    this.close.emit();          
+    this.uiState.closeOverlay();
+  }
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedContact'] && this.selectedContact) {
+      this.contactForm.patchValue({
+        name: this.selectedContact.name,
+        email: this.selectedContact.email,
+        phone: this.selectedContact.phone ?? ''
+      });
     }
   }
+  
+  private editedContactSubject = new BehaviorSubject<Contact | null>(null);
+  public editedContact$ = this.editedContactSubject.asObservable();
+
+  setEditedContact(contact: Contact | null): void {
+    this.editedContactSubject.next(contact);
+  }
+
 }

@@ -1,61 +1,67 @@
 import { inject, Injectable, NgZone } from '@angular/core';
 import { Firestore, collection, collectionData, doc, updateDoc, deleteDoc, addDoc, CollectionReference, DocumentData } from '@angular/fire/firestore';
 import { Contact } from '../interfaces/contact.interface';
-import { from, Observable } from 'rxjs';
+import { BehaviorSubject, from, Observable } from 'rxjs';
+import { FirestoreService } from './firestore.service';
 
 @Injectable({ providedIn: 'root' })
 export class ContactService {
-  private readonly firestore: Firestore = inject(Firestore);
-  private readonly ngZone: NgZone = inject(NgZone);
-  private readonly contactsRef: CollectionReference<DocumentData> = collection(this.firestore, 'contacts');
+  private readonly ngZone = inject(NgZone);
+  private readonly firestoreService = inject(FirestoreService);
+
+  private readonly collectionPath = 'contacts';
 
   getContacts(): Observable<Contact[]> {
-    return collectionData(this.contactsRef, { idField: 'id' }) as Observable<Contact[]>;
+    return this.firestoreService.getAll<Contact>(this.collectionPath, 'id');
   }
 
- async addContact(contact: Contact): Promise<Observable<void>> {
-  console.log('addContact called with', contact);
-  return from(
-    addDoc(this.contactsRef, contact)
-      .then(() => {
-        console.log('Firestore addDoc succeeded');
-      })
-      .catch(err => {
-        console.error('Firestore addDoc error:', err);
+  addContact(contact: Contact): Observable<void> {
+    console.log('addContact called with', contact);
+    return from(
+      this.firestoreService.add<Contact>(this.collectionPath, contact).then(() => {
+        console.log('Firestore add succeeded');
+      }).catch(err => {
+        console.error('Firestore add error:', err);
         throw err;
       })
-  );
-}
+    );
+  }
 
-  async updateContact(contact: Contact): Promise<Observable<void>> {
+  updateContact(contact: Contact): Observable<void> {
     if (!contact.id) return from(Promise.resolve());
-    const docRef = doc(this.firestore, `contacts/${contact.id}`);
-    return from(
-      new Promise<void>((resolve, reject) => {
-        this.ngZone.run(() => {
-          updateDoc(docRef, {
-            name: contact.name,
-            email: contact.email,
-            phone: contact.phone || '',
-            color: contact.color || '',
-          })
-            .then(() => resolve())
-            .catch(reject);
-        });
-      })
-    );
+    return from(new Promise<void>((resolve, reject) => {
+      this.ngZone.run(() => {
+        this.firestoreService.update<Contact>(this.collectionPath, contact.id!, {
+          name: contact.name,
+          email: contact.email,
+          phone: contact.phone || '',
+          color: contact.color || ''
+        }).then(resolve).catch(reject);
+      });
+    }));
   }
 
-  async deleteContact(contactId: string): Promise<Observable<void>> {
-    const docRef = doc(this.firestore, `contacts/${contactId}`);
-    return from(
-      new Promise<void>((resolve, reject) => {
-        this.ngZone.run(() => {
-          deleteDoc(docRef)
-            .then(() => resolve())
-            .catch(reject);
-        });
-      })
-    );
+  deleteContact(contactId: string): Observable<void> {
+    return from(new Promise<void>((resolve, reject) => {
+      this.ngZone.run(() => {
+        this.firestoreService.delete(this.collectionPath, contactId)
+          .then(resolve)
+          .catch(reject);
+      });
+    }));
   }
+
+  getContactById(id: string): Observable<Contact> {
+    return new Observable<Contact>((observer) => {
+      this.ngZone.run(() => {
+        this.firestoreService.getById<Contact>(this.collectionPath, id).subscribe({
+          next: (contact) => observer.next(contact),
+          error: (err) => observer.error(err),
+          complete: () => observer.complete()
+        });
+      });
+    });
+  }
+
+
 }

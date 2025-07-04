@@ -1,57 +1,56 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { Firestore, 
-        collection, 
-        doc, 
-        addDoc, 
-        updateDoc, 
-        deleteDoc, 
-        getDoc, 
-        getDocs, 
-        CollectionReference, 
-        DocumentReference, 
-        setDoc} from '@angular/fire/firestore';
-import { DocumentData, WithFieldValue } from '@angular/fire/firestore';        
-import { collectionData, docData } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  doc,
+  docData,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  addDoc,
+  CollectionReference,
+  DocumentReference,
+  DocumentData,
+  UpdateData
+} from '@angular/fire/firestore';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Contact } from '../interfaces/contact.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FirestoreService {
-  private contactsCollection: CollectionReference<Contact>;
 
-  constructor(private firestore: Firestore) {
-    this.contactsCollection = collection(this.firestore, 'contacts') as CollectionReference<Contact>;
+  constructor(private firestore: Firestore) {}
+
+  getAll<T extends { id?: string }>(collectionPath: string, idField?: string): Observable<T[]> {
+    const ref = collection(this.firestore, collectionPath) as CollectionReference<T>;
+    const options = idField ? { idField: idField as keyof T } : undefined;
+    return collectionData(ref, options as any) as Observable<T[]>;
   }
 
-  getContacts(): Observable<Contact[]> {
-    return collectionData(this.contactsCollection, { idField: 'id' }) as Observable<Contact[]>;
+  getById<T>(collectionPath: string, id: string): Observable<T & { id: string }> {
+    const ref = doc(this.firestore, collectionPath, id);
+    return docData(ref, { idField: 'id' }) as Observable<T & { id: string }>;
   }
 
-  getContactById(id: string): Observable<Contact | undefined> {
-    const docRef: DocumentReference<Contact> = doc(this.contactsCollection, id);
-    return docData(docRef, { idField: 'id' }) as Observable<Contact | undefined>;
+  add<T>(collectionPath: string, data: T): Promise<DocumentReference<T>> {
+    const col = collection(this.firestore, collectionPath) as CollectionReference<T>;
+    return addDoc(col, data);
   }
 
-  addContact(contact: Contact): Promise<DocumentReference<Contact>> {
-    return addDoc(this.contactsCollection, contact);
+  set<T>(collectionPath: string, id: string, data: T): Promise<void> {
+    const ref = doc(this.firestore, collectionPath, id) as DocumentReference<T>;
+    return setDoc(ref, data);
   }
 
-  updateContact(contact: Contact): Promise<void> {
-    if (!contact.id) return Promise.reject('Contact ID is missing');
-
-    const docRef: DocumentReference<Contact> = doc(this.contactsCollection, contact.id);
-    return updateDoc(docRef, {
-      name: contact.name,
-      email: contact.email,
-      phone: contact.phone ?? '',
-      color: contact.color ?? ''
-    });
+  update<T>(collectionPath: string, id: string, data: UpdateData<T>): Promise<void> {
+    const ref: DocumentReference<DocumentData> = doc(this.firestore, collectionPath, id);
+    return updateDoc(ref, data as UpdateData<DocumentData>);
   }
 
-  deleteContact(id: string): Promise<void> {
-    const docRef: DocumentReference<Contact> = doc(this.contactsCollection, id);
-    return deleteDoc(docRef);
+  delete(collectionPath: string, id: string): Promise<void> {
+    const ref = doc(this.firestore, collectionPath, id);
+    return deleteDoc(ref);
   }
 }

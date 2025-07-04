@@ -20,7 +20,6 @@ import { UiStateService } from '../../../shared/services/ui-state.service';
     CommonModule,
     AddContacts,
     EditContact
-  
   ],
   templateUrl: './contacts.html',
   styleUrls: ['./contacts.scss']
@@ -104,7 +103,6 @@ export class Contacts implements OnInit, OnDestroy {
   }
 
   closeOverlay(): void {
-    console.log('closeOverlay triggered!!!!')
     this.uiState.closeOverlay();
   }
 
@@ -154,11 +152,6 @@ export class Contacts implements OnInit, OnDestroy {
     this.contactsService.deleteContact(id);
   }
 
-  deleteContactById(contactId: string): void {
-    const docRef = doc(this.firestore, `contacts/${contactId}`);
-    deleteDoc(docRef);
-  }
-
   getKeys(obj: Record<string, Contact[]> | null): string[] {
     return obj ? Object.keys(obj) : [];
   }
@@ -178,5 +171,10 @@ export class Contacts implements OnInit, OnDestroy {
       }
     });
   }*/
+  }
+
+  openEditContact(contact: Contact) {
+    this.selectedContact = contact;
+    this.uiState.openOverlay('edit-contact');
   }
 }

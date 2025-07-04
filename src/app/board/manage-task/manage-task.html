@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="header-section">
+  <!-- #region mobile Nav Section-->
+  <h1>Board</h1>
+  <div class="search-container">
+      <form action="">
+          <div class="input-search">
+              <input type="text" placeholder="Name">
+              <button class="magnifyin-glass">
+                <img src="/icons/magnifyin-glass.svg" alt="person" />
+              </button>
+              <div  class="validation-message">
+              </div>
+          </div>
+      </form>
+      <button class="btn primary">+ Add task</button>
+  </div>
+
+  </div>
+  <div class="grid-board">
+    <div class="column" *ngFor="let col of columns">
+        <div class="flex space-between">
+          <h4>{{ col.title }}</h4> <button class=" add-icon">+</button></div>
+        <div
+          cdkDropList
+          [cdkDropListData]="col.tasks"
+          [cdkDropListConnectedTo]="connectedDropLists"
+          class=""
+          (cdkDropListDropped)="drop($event)"
+          [id]="col.id"
+        >
+          <div class="card flex column" *ngFor="let task of col.tasks" cdkDrag>
+            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+            <div class=""><span class="category"> User Story</span></div>
+            <div class="task-title"><h4> HTML Base Template Creation</h4></div>
+            <div class="description">shortescription</div>
+              <mat-progress-bar mode="determinate" value="90"></mat-progress-bar> 
+            <div class="flex subtask-progress">
+            <span>1/3</span>
+            </div>
+            <div class="flex">
+                <div class="flex">
+                    <div class="circle blue z-index-30">br</div>
+                    <div class="circle red z-index-40">sr</div>
+                    <div class="circle blue z-index-50">tm</div>
+              </div>          
+              <div>priority</div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="overlay">
+  <div class="card flex column task-detail-card">
+    <div class="close-btn" (click)="closePopup()">
+        <span class="close-sign">X</span>
+    </div>
+  <div class="">
+    <span class="category"> User Story</span>
+  </div>
+  <div class="task-detail-title">
+    <h3> HTML Base Template Creation</h3>
+  </div>
+  <div class="description">shortescription</div>
+  <div class="flex column">
+  <div class="flex">
+    <div><h4>due date:</h4></div>
+    <div><h4>25/01/2025</h4></div>
+  </div>
+  <div class="flex">
+    <div><span>Priority:</span></div>
+    <div><span>Medium </span></div>
+  </div>
+  </div>
+  <div class="flex column basic-gap">
+    <div class="">
+      <h4>Assigned to</h4>
+    </div>
+      <div class="flex column">
+        <div class="flex assigned-to basic-gap">
+          <div class="circle blue flex">pf</div>
+          <div>Peter Frank</div>
+        </div>
+        <div class="flex assigned-to basic-gap">
+          <div class="circle red flex">sr</div>
+          <div>Sven Richter</div>
+        </div>
+        <div class="flex assigned-to basic-gap ">
+          <div class="circle blue felx">tm</div>
+          <div>Tim Müller</div>
+        </div>
+    </div>          
+    <div>priority</div>
+  </div>
+  </div>
+</div>

@@ -3,18 +3,16 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-
   &.mobile {
     @include center-row;
     width: 100%;
     padding:$spacing-xs;
   }
 }
-
 .nav-item {
   display: flex;
   align-items: center;
-  padding: 0.75rem $spacing-base;
+  padding: 0.75rem $spacing-2xl;
   margin-bottom:$spacing-xs;
   text-decoration: none;
   color: $color-gray;
@@ -27,7 +25,6 @@
   &:active {
     background-color: rgba(0, 0, 0, 0.1);
   }
-
   &.mobile {
     flex: 1;
     flex-direction: column;
@@ -45,13 +42,11 @@
  .nav-item:hover svg {
   fill: $color-white;  // Hover-Farbe (rot als Beispiel)
 }
-
 .nav-icon {
   width: 24px;
   height: 24px;
   margin-right: $spacing-base;
   flex-shrink: 0;
-
   &.mobile {
     margin-right: 0;
     margin-bottom: $spacing-2xs;
@@ -61,8 +56,8 @@
 }
 .nav-text {
   flex: 1;
-  font-size:var(--font-size-base);
-
+  font-size:var(--font-size-sm);
+  
   &.mobile {
     display: block;
     flex: none;

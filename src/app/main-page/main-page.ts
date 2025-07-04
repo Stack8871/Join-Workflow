@@ -1,12 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { Contacts } from '../contacts-sektion/contacts/contacts';
-import { AddContacts } from '../contacts-sektion/add-contacts/add-contacts';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [CommonModule, Contacts, AddContacts],
+  imports: [CommonModule, RouterOutlet],
   templateUrl: './main-page.html',
   styleUrl: './main-page.scss'
 })

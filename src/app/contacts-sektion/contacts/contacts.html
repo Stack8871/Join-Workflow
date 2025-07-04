@@ -4,7 +4,6 @@
     Add new contact
     <img src="/icons-white/person_add.svg" alt="check" class="new-contact-icon" />
   </button>
-
   <div class="contact-list">
     <ng-container *ngIf="(groupedContacts$ | async) as groupedContacts; else loading">
       <div *ngIf="!groupedContacts || (getKeys(groupedContacts).length === 0)">
@@ -36,13 +35,9 @@
 </div>
   <section class="contacts-detail-container" [ngClass]="mobileClass">
     <div class="contacts-info-container" [ngClass]="mobileClass">
-      <h2>Contacts</h2>
-      <div class="contacts-info-line">
-        <img src="/img/Card_Contacts/Vector.png" alt="Contacts vector image">
-      </div>
+      <h1 class="line-seperator">Contacts</h1>
       <h3 class="subheadline">Better with a team</h3>
     </div>
-
     @if (selectedContact) {
     <div>
       <button class="back-button" [class.mobile-only]="true" (click)="closeContactDetails()">
@@ -72,10 +67,8 @@
       </div>
           <div class="contacts-information" [ngClass]="mobileClass">
             <h3>Contact Information</h3>
-
             <h4 class="email-link">Email</h4>
             <a href="#">{{ selectedContact.email }}</a>
-
             <h4>Phone</h4>
             <p>{{ selectedContact.phone }}</p>
           </div>

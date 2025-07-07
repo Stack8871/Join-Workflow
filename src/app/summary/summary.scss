@@ -25,22 +25,32 @@
 
 }
 .task-step-text{
-    display:flex;
-    justify-content: center;
+    color:$color-primary;
     text-align: center;
     & h4{
         font-size: var(--font-size-lg);
+    }
+    &:hover{
+        color:$color-white;
     }
 }
 .circle-primary-color{
  background: $color-primary;
 
  &:hover{
-     background: $color-white;
+    background: $color-white;
  }
+}
+.circle-primary-color svg {
+  fill: $color-gray;  // Standardfarbe
+  transition: fill 0.3s;
+}
+.circle-primary-color:hover svg {
+  fill: $color-white;  // Hover-Farbe (rot als Beispiel)
 }
 .circle-urgent-color{
  background: $color-accent-urgent;
+ 
 }
 .card{
     border-radius: $card-radius;
@@ -49,12 +59,35 @@
     background: $color-bg-card;
     gap: $spacing-sm;
     margin:$spacing-sm 0;
+    &:hover{
+        background: $color-primary;
+    }
 }
 .card-circle-content{
     display:flex;
+    flex-basis:100%;
+    color: $color-primary;
     flex:1;
     align-items: center;
     justify-content: center;
+    &:hover{
+        color:$color-white;
+        & .circle-primary-color{
+            background: $color-white;
+        }
+    }
+}
+.card-circle-content:hover svg {
+  fill: $color-primary;  // Hover-Farbe (rot als Beispiel)
+}
+.card-circle-content > *:hover{
+    h4, h5{
+        color:$color-white;
+    }
+}
+.urgent-circle, .urgent-content {
+    min-width: 192px;
+    text-align: center;
 }
 .urgent-content{
     display: flex;
@@ -69,8 +102,10 @@
     gap:$spacing-base;
 }
 .tasks-overview{
-    flex-flow: row wrap;
+    flex-wrap:wrap;
+    min-width: 10ch;
     max-width: 400px;
+    flex-basis: 100%;
 }
 .margin-bottom{
     margin-bottom: $spacing-5xl;
@@ -79,10 +114,10 @@
 .dashboard-container {
   display: flex;
   gap: 4rem;
+  flex-wrap:wrap;
   align-items: center;
   & h4{
     font-size: var(--font-size-xl);
-    color:$color-primary;
     font-weight: 700;
   }
   & h3{
@@ -95,6 +130,7 @@
     display: flex;
     align-items: center;
     gap:$spacing-base;
+    flex-wrap: wrap;
 
     & h1{
         font-size: var(--font-size-2xl);

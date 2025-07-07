@@ -244,6 +244,13 @@ color:$color-medium-gray;
     }
   }
 }
+.ai-center{
+  align-items: center;
+}
+.jc-center{
+justify-content: center;
+}
+
 @media (width < 767px){
   .button-group {
   flex-direction: column;

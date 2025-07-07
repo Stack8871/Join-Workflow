@@ -15,9 +15,11 @@
               [ngClass]="{'valid-field': isFieldValid('title'), 'invalid-field': isFieldInvalid('title')}"
             >
           </div>
-          <div *ngIf="isFieldInvalid('title')" class="validation-message">
-            {{ getValidationMessage('title') }}
-          </div>
+          @if (isFieldInvalid('title')) {
+            <div class="validation-message">
+              {{ getValidationMessage('title') }}
+            </div>
+          }
         </div>
 
         <div class="form-group">
@@ -30,9 +32,11 @@
               [ngClass]="{'valid-field': isFieldValid('description'), 'invalid-field': isFieldInvalid('description')}"
             ></textarea>
           </div>
-          <div *ngIf="isFieldInvalid('description')" class="validation-message">
-            {{ getValidationMessage('description') }}
-          </div>
+          @if (isFieldInvalid('description')) {
+            <div class="validation-message">
+              {{ getValidationMessage('description') }}
+            </div>
+          }
         </div>
 
         <div class="form-group">
@@ -45,9 +49,11 @@
               [ngClass]="{'valid-field': isFieldValid('dueDate'), 'invalid-field': isFieldInvalid('dueDate')}"
             >
           </div>
-          <div *ngIf="isFieldInvalid('dueDate')" class="validation-message">
-            {{ getValidationMessage('dueDate') }}
-          </div>
+          @if (isFieldInvalid('dueDate')) {
+            <div class="validation-message">
+              {{ getValidationMessage('dueDate') }}
+            </div>
+          }
         </div>
       </div>
 
@@ -64,6 +70,7 @@
               (click)="setPriority('urgent')"
             >
               Urgent
+              <img src="/img/add task/Prio alta.png" alt="Urgent priority icon" class="priority-icon">
             </button>
             <button
               type="button"
@@ -72,6 +79,7 @@
               (click)="setPriority('medium')"
             >
               Medium
+              <img src="/img/add task/Prio media.png" alt="Medium priority icon" class="priority-icon">
             </button>
             <button
               type="button"
@@ -80,6 +88,7 @@
               (click)="setPriority('low')"
             >
               Low
+              <img src="/img/add task/Prio baja.png" alt="Low priority icon" class="priority-icon">
             </button>
           </div>
         </div>
@@ -95,9 +104,11 @@
               [ngClass]="{'valid-field': isFieldValid('assignedTo'), 'invalid-field': isFieldInvalid('assignedTo')}"
             >
           </div>
-          <div *ngIf="isFieldInvalid('assignedTo')" class="validation-message">
-            {{ getValidationMessage('assignedTo') }}
-          </div>
+          @if (isFieldInvalid('assignedTo')) {
+            <div class="validation-message">
+              {{ getValidationMessage('assignedTo') }}
+            </div>
+          }
         </div>
 
         <div class="form-group">
@@ -111,9 +122,11 @@
               [ngClass]="{'valid-field': isFieldValid('category'), 'invalid-field': isFieldInvalid('category')}"
             >
           </div>
-          <div *ngIf="isFieldInvalid('category')" class="validation-message">
-            {{ getValidationMessage('category') }}
-          </div>
+          @if (isFieldInvalid('category')) {
+            <div class="validation-message">
+              {{ getValidationMessage('category') }}
+            </div>
+          }
         </div>
 
         <div class="form-group">
@@ -127,9 +140,11 @@
               [ngClass]="{'valid-field': isFieldValid('subtask'), 'invalid-field': isFieldInvalid('subtask')}"
             >
           </div>
-          <div *ngIf="isFieldInvalid('subtask')" class="validation-message">
-            {{ getValidationMessage('subtask') }}
-          </div>
+          @if (isFieldInvalid('subtask')) {
+            <div class="validation-message">
+              {{ getValidationMessage('subtask') }}
+            </div>
+          }
         </div>
       </div>
     </div>

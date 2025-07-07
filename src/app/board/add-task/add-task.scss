@@ -160,17 +160,17 @@
           cursor: pointer;
         }
 
-        /* Firefox specific styling */
+
         &::-moz-calendar-picker-indicator {
           opacity: 0;
         }
 
-        /* Remove the clear button in Edge */
+
         &::-ms-clear {
           display: none;
         }
 
-        /* General styling for all browsers */
+
         &:hover {
           border-color: $color-subtask-bar;
         }
@@ -180,7 +180,7 @@
           box-shadow: 0 0 0 2px rgba(41, 171, 226, 0.2);
         }
 
-        /* Ensure text is properly aligned and formatted */
+
         &::placeholder {
           color: $color-light-gray;
         }
@@ -208,6 +208,16 @@
       cursor: pointer;
       transition: all 0.2s ease;
       font-size: var(--font-size-base);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .priority-icon {
+        width: 20px;
+        height: 20px;
+        margin-left: 8px;
+      }
 
       &.urgent {
         &.selected, &:hover {

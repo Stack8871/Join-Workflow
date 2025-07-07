@@ -11,14 +11,11 @@
   </div>
   <div class="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. At unde expedita, dignissimos quasi soluta velit dolorem nobis nam eaque labore, perferendis tempore repellat molestias </div>
   <div class="flex column small-gap">
-  <div class="flex">
-    <div><h4>due date:</h4></div>
-    <div><span>25/01/2025</span></div>
-  </div>
-  <div class="flex">
-    <div><h4>Priority:</h4></div>
-    <div><span>Medium </span></div>
-  </div>
+    <div class="flex ai-center small-gap">
+      <h4>due date:</h4><h5>25-01-2025</h5>
+    </div>
+  <div class="flex ai-center small-gap">
+    <h4>Priority:</h4><h5>Medium </h5>
   </div>
   <div class="flex column basic-gap">
     <div class="">
@@ -42,14 +39,16 @@
       <div>
         <h4>Subtasks:</h4>
       </div>
-      <div class="">
-        <input class="ckeckbox-subtask" type="checkbox" name="Subtask1" id="st1">        
-        <label for="Subtask1">titel des ersten Subtasks</label>
+      <form>
+      <div class="checkbox-container">   
+                <input class="custom-checkbox" type="checkbox" name="Subtask1" id="st1">  
+               <label for="Subtask1" class="label-for-checkbox">titel des ersten Subtasks</label>
       </div>
-      <div>
-        <input class="ckeckbox-subtask" type="checkbox" name="Subtask2" id="st2">        
-        <label for="Subtask2">titel des zweiten Subtasks</label>
-      </div>
+      <div class="checkbox-container">
+        <input class="custom-checkbox" type="checkbox" name="Subtask1" id="st1">    
+        <label for="Subtask1" class="label-for-checkbox">titel des zwoter Subtasks</label>
+      </div>    
+    </form>
     </div>
     <div class="edit-delete-section">
       <div class="flex">

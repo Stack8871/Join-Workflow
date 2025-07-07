@@ -98,6 +98,10 @@ export class Contacts implements OnInit, OnDestroy {
     return this.showMobileDetails() ? 'mobile show-details' : 'mobile';
   }
 
+  onContactUpdated(updated: Contact | null) {
+    this.selectedContact = updated;
+  }
+
   openAddContact() {
     this.uiState.openOverlay('add-contacts');
   }
@@ -148,7 +152,8 @@ export class Contacts implements OnInit, OnDestroy {
     });
   }
 
-  deleteContact(id: string): void {
+  deleteContact(id?: string): void {
+    if (!id) return;
     this.contactsService.deleteContact(id);
   }
 
@@ -158,7 +163,8 @@ export class Contacts implements OnInit, OnDestroy {
 
   async handleSubmit(newContact: Contact): Promise<void> {
     console.log('hello world', newContact)
-    /*if (newContact){
+    /*
+    if (newContact){
     console.log('contacts.ts received:', newContact);
     (await this.contactsService.addContact(newContact)).subscribe({
       next: () => {
@@ -170,7 +176,13 @@ export class Contacts implements OnInit, OnDestroy {
         console.error('Error while saving contact in parent:', err);
       }
     });
-  }*/
+  } // => data wont be transfered from child (add-contact) to parent
+  */
+  }
+
+  handleEditClose(): void {
+    this.uiState.closeOverlay();      
+    this.closeContactDetails(); 
   }
 
   openEditContact(contact: Contact) {

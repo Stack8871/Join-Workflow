@@ -1,0 +1,82 @@
+@use 'index' as *;
+
+.flex{
+    display: flex;
+}
+.column{
+    flex-direction: column;
+}
+
+.task-detail-title{
+    font-size: var(--font-size-2xl);
+}
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100svh;
+    width: 100%;
+    background-color: #242424b6;
+    z-index:9999;
+  @include center;            
+}
+.task-detail-card{
+    max-width: 550px;
+    margin:0 $spacing-base;
+}
+h4{
+    color:$color-primary;
+    font-size: var(--font-size-base);
+}
+  .assigned-to{
+    align-items: center;
+    margin-bottom: $spacing-base;
+  }
+  .ckeckbox-subtask{
+    display: inline-block;
+    width:24px;
+    margin-right:$spacing-xs;
+  }
+  .edit-delete-section{
+    display: flex;
+    justify-content: flex-end;
+  }
+  .edit-delete{
+    display: flex;
+    align-items: center;
+    height: 24px;
+    margin: 0 $spacing-xs;
+    gap: $spacing-2xs;
+  }
+  .ai-center{
+    align-items: center;
+  }
+  .rounded{
+    border-radius: 50%;
+  }
+  .description{
+    color:$color-gray;
+}
+.subtask-progress{
+align-items: center;
+gap: $spacing-xs;
+}
+.category{
+        border-radius: $card-radius;
+        padding: $spacing-2xs;
+        background:$color-badge-userstory;
+        font-size: var(--font-size-sm);
+        color:$color-lighter-gray;
+}
+.user-story-clr{
+    background:$color-badge-userstory;
+}
+.tecnical-clr{
+    background:$color-medium-gray;
+}
+.blue{
+    background: $color-avatar-3;
+}
+.red{
+    background: $color-accent-urgent;
+}

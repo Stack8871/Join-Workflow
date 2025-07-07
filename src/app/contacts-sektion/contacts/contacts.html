@@ -86,6 +86,7 @@
 <app-edit-contact
   *ngIf="editContactOpen$ | async"
   [selectedContact]="selectedContact"
+  (contactChanged)="onContactUpdated($event)"
   (close)="closeOverlay()"
   (cancel)="closeOverlay()"
 ></app-edit-contact>

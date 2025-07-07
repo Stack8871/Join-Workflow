@@ -98,6 +98,10 @@ export class Contacts implements OnInit, OnDestroy {
     return this.showMobileDetails() ? 'mobile show-details' : 'mobile';
   }
 
+  onContactUpdated(updated: Contact | null) {
+    this.selectedContact = updated;
+  }
+
   openAddContact() {
     this.uiState.openOverlay('add-contacts');
   }

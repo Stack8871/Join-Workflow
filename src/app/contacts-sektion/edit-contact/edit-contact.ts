@@ -22,8 +22,19 @@ import { FirestoreService } from '../../../shared/services/firestore.service';
 })
 
 export class EditContact implements OnDestroy, OnChanges, OnInit {
-  @Input() selectedContact: Contact | null = null;
+  private _selectedContact = signal<Contact | null>(null);
+
+  @Input()
+  set selectedContact(value: Contact | null) {
+    this._selectedContact.set(value);
+  }
+
+  get selectedContact(): Contact | null {
+    return this._selectedContact();
+  }
+  // @Input() selectedContact: Contact | null = null;
   isMobile: WritableSignal<boolean> = signal(false);
+  @Output() contactChanged = new EventEmitter<Contact | null>();
   @Output() close = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
   @Output() submit = new EventEmitter<Contact>();
@@ -110,7 +121,6 @@ export class EditContact implements OnDestroy, OnChanges, OnInit {
       const changedContact = await firstValueFrom(this.contactService.getContactById(updatedContact.id!));
 
       this.ngZone.run(() => {
-        this.selectedContact = changedContact;
         this.contactForm.patchValue({
           name: changedContact.name,
           email: changedContact.email,
@@ -118,6 +128,8 @@ export class EditContact implements OnDestroy, OnChanges, OnInit {
         });
         this.close.emit();
         this.uiState.closeOverlay();
+        this._selectedContact.set(changedContact);
+        this.contactChanged.emit(this._selectedContact());
       });
     } catch (error: any) {
       console.error('Update failed:', error);

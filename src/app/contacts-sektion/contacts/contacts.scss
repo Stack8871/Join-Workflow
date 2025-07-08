@@ -113,6 +113,8 @@
   h3 {
     font-size: var(--font-size-md);
     color: $color-primary;
+    padding-top: 6px;
+    font-weight:400;
   }
 }
 
@@ -161,7 +163,12 @@ position: sticky;
       border:none;
       background:transparent;
     }
-
+  }
+  @media (width > 700px){
+      .mobile-btn-add-contact{
+        display: none;
+      }
+ 
   }
 .contact-list {
   min-height: 100px;
@@ -205,6 +212,7 @@ position: sticky;
   }
   &:hover {
     background-color: #f8f9fa;
+    border-radius:$spacing-xs;
   }
   &.selected {
     background-color:$color-primary;

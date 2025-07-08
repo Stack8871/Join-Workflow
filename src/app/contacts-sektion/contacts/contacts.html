@@ -69,9 +69,9 @@
           <div class="contacts-information" [ngClass]="mobileClass">
             <h3>Contact Information</h3>
             <h4 class="email-link">Email</h4>
-            <a href="#">{{ selectedContact.email }}</a>
+            <a href="mailto:{{ selectedContact.email }}">{{ selectedContact.email }}</a>
             <h4>Phone</h4>
-            <p>{{ selectedContact.phone }}</p>
+            <a href="tel:{{ selectedContact.phone }}">{{ selectedContact.phone }}</a>
           </div>
     </div>
     }

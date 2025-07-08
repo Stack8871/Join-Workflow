@@ -1,7 +1,7 @@
 <div class="contacts-page-container" [ngClass]="mobileClass">
   <div class="contact-container" [ngClass]="mobileClass">
   <button class="add-contact-btn" (click)="openAddContact()">
-    Add new contact
+    <span>Add new contact</span>
     <img src="/icons-white/person_add.svg" alt="check" class="new-contact-icon" />
   </button>
   <div class="contact-list">
@@ -76,6 +76,11 @@
     </div>
     }
   </section>
+  <div class="mobile-btn-add-contact">
+      <button (click)="openAddContact()">
+    <img src="/icons-white/person_add.svg" alt="check" />
+  </button>
+  </div>
 </div>
 
 <app-add-contacts 

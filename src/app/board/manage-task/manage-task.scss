@@ -2,73 +2,71 @@
 @use 'index' as *;
 
 .flex{
-    display: flex;
+  display: flex;
 }
 .column{
-    flex-direction: column;
+  flex-direction: column;
 }
 .space-between{
-    justify-content:space-between;
+  justify-content:space-between;
 }
 .container{
-    margin:$spacing-3xl;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    max-width: 1440px;
-
+  margin:$spacing-3xl;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 1440px;
 }
 .header-section{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: $spacing-5xl;
-    flex-wrap:wrap;
-    align-items: center;
-
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: $spacing-5xl;
+  flex-wrap:wrap;
+  align-items: center;
 }
 .grid-board{
-    display:grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
-    width: 75svw;
-    max-width:1100px;
+  display:grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  width: 75svw;
+  max-width:1100px;
 }
 .card{
-    border-radius: $card-radius;
-    padding: $card-padding;
-    box-shadow: $card-shadow;
-    background: $color-bg-card;
-    gap: $spacing-sm;
-    margin:$spacing-sm 0;
+  border-radius: $card-radius;
+  padding: $card-padding;
+  box-shadow: $card-shadow;
+  background: $color-bg-card;
+  gap: $spacing-sm;
+  margin:$spacing-sm 0;
 }
 
 /* Add cursor pointer and hover effect for draggable cards */
 .card[cdkDrag] {
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card[cdkDrag]:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  transform: scale(1.02);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 h4{
-    color:$color-primary;
-    font-size: var(--font-size-base);
+  color:$color-primary;
+  font-size: var(--font-size-base);
 }
 .description{
-    color:$color-gray;
+  color:$color-gray;
 }
 .subtask-progress{
-align-items: center;
-gap: $spacing-xs;
+  align-items: center;
+  gap: $spacing-xs;
 }
 .category{
-        border-radius: $card-radius;
-        padding: $spacing-2xs;
-        background:$color-badge-userstory;
-        font-size: var(--font-size-sm);
-        color:$color-lighter-gray;
+  border-radius: $card-radius;
+  padding: $spacing-2xs;
+  background:$color-badge-userstory;
+  font-size: var(--font-size-sm);
+  color:$color-lighter-gray;
 }
 .user-story-clr{
     background:$color-badge-userstory;
@@ -114,8 +112,8 @@ gap: $spacing-xs;
    }
 }
 .input-search{
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 }
 .cdk-drag-preview {
   box-sizing: border-box;
@@ -167,13 +165,13 @@ align-items: center;
     font-size: var(--font-size-2xl);
 }
 .overlay{
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100svh;
-    width: 100%;
-    background-color: #242424b6;
-    z-index:9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100svh;
+  width: 100%;
+  background-color: #242424b6;
+  z-index:9999;
   @include center;
 }
 .task-detail-card{

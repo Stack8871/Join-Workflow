@@ -3,14 +3,36 @@
 .contacts-page-container {
     display: flex;
     flex-direction: column;
-    width: 82svw;
     flex-direction: row;
   &.mobile {
     flex-direction: column;
     left: 0;
-    width: 99svw;
     padding: 0;
     margin-top: -19px;
+  }
+}
+.contacts-detail-container {
+    display: flex;
+    flex-direction: column;
+   gap:$spacing-5xl;
+
+  .mobile & {
+    position: relative;
+    top: -100px;
+    right: auto;
+    width: 100%;
+    margin-top: $spacing-base;
+    display: none;
+  }
+
+  .mobile.show-details & {
+    display: block;
+    height: calc(100svh - 135px);
+    overflow-y: auto;
+    padding: $spacing-base;
+    margin-top: 140px;
+    background-color: $color-white;
+    box-sizing: border-box;
   }
 }
 .contact-container {
@@ -18,7 +40,7 @@
     padding: 0 $spacing-md;
     background-color: #fff;
     box-shadow: $header-shadow;
-    height: 100svh;
+    height: calc(100svh - 65px);
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -26,7 +48,7 @@
   .mobile & {
     width: 100%;
     margin-bottom: $spacing-base;
-    height: 100svh;
+    height: calc(100svh - 135px);
     border-radius: 0;
     box-sizing: border-box;
   }
@@ -34,7 +56,15 @@
     display: none;
   }
 }
-.show-mobil {
+.contact-header{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  & h3{
+    padding: $spacing-xs 0 0 $spacing-base;
+  }
+}
+.show-mobile {
   display: none;
 
   .mobile & {
@@ -251,31 +281,6 @@ align-items: center;
   display: flex;
   flex-direction: column;
 }
-.contacts-detail-container {
-    display: flex;
-    flex: 2;
-    flex-direction: column;
-    padding:6rem 3rem 3rem 3rem;
-
-  .mobile & {
-    position: relative;
-    top: -100px;
-    right: auto;
-    width: 100%;
-    margin-top: $spacing-base;
-    display: none;
-  }
-
-  .mobile.show-details & {
-    display: block;
-    height: calc(100vh - 300px);
-    overflow-y: auto;
-    padding: $spacing-base;
-    margin-top: 140px;
-    background-color: $color-white;
-    box-sizing: border-box;
-  }
-}
 .circle-initial {
   display: flex;
   gap: $spacing-4xl;
@@ -298,8 +303,8 @@ align-items: center;
   }
 }
 .circle-user  {
-  width: 100px;
-  height: 100px;
+  min-width: 70px;
+  min-height: 70px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -324,6 +329,7 @@ align-items: center;
   .mobile & {
     justify-content: center;
     gap: $spacing-lg;
+    display:none;
   }
 }
 .contacts-information {

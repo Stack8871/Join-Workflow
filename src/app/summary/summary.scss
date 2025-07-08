@@ -67,15 +67,22 @@
     display:flex;
     flex-basis:100%;
     color: $color-primary;
-    flex:1;
     align-items: center;
     justify-content: center;
     &:hover{
         color:$color-white;
+        transform: scale(1.2,1.2);
+        transform-origin: center;
+        transition: all;
+        transition-duration: 150ms;
+        transition-timing-function: ease-in-out;
         & .circle-primary-color{
             background: $color-white;
         }
     }
+}
+.summery-card{
+    gap: $spacing-3xl;
 }
 .card-circle-content:hover svg {
   fill: $color-primary;  // Hover-Farbe (rot als Beispiel)
@@ -99,11 +106,12 @@
     }
 }
 .overview-gap{
-    gap:$spacing-base;
+    gap:$spacing-2xl;
 }
 .tasks-overview{
+    display:flex;
     flex-wrap:wrap;
-    min-width: 10ch;
+    min-width: 5ch;
     max-width: 400px;
     flex-basis: 100%;
 }

@@ -1,74 +1,41 @@
 @use 'index' as *;
-body{
-    font-family: $font-family-base;
-    font-weight: $font-weight-regular;
+.wrapper {
+  display:flex;
+  flex-wrap: wrap;
 }
-.grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto auto;
-
-}
-
 
 header {
-  grid-column: 1 / 4;
-  grid-row: 1;
   color:$color-gray ;
   font-size: 1.5rem;
   height: 65px;
   background-color: #f8f9fa;
   box-shadow: $header-shadow;
-
 }
 
-.sidebar {
-  grid-column: 1;
-  grid-row: 1 / 3;
+.aside {
   color: $color-gray;
   background: $color-primary;
   max-width:232px;
 }
+.content-container{
+  display: flex;
+  flex-direction: column;
+  width:100svw;
 
-.wrapper {
-display: flex;
-justify-content: flex-start;
+}
+@media (width > 800px){
+  .content-container{
+      width:calc(100svw - 199px);
+  }
 }
 .content{
 max-width:1440px;
-
-}
-.left-container{
-  flex:1;
-}
-.right-container{
-  flex:2;
 }
 
-@media (max-width < 768px) {
-  .grid-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-  }
-  .header {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  .sidebar {
-    grid-column: 1;
-    grid-row: 2;
-  }
-  .content-container{
-    grid-column: 1;
-    grid-row: 3;
-  }
-}
 .contact-list {
   list-style: none;
   padding: 0;
   max-width: 500px;
-  margin: 0 auto;
-  font-family: sans-serif;
 }
 .contact-list > li {
   margin-bottom: 2rem;

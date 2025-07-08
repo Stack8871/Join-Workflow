@@ -77,7 +77,8 @@ $input-radius: 0.5rem;
 .line-seperator {
   position: relative;
   display: inline-block;
-  padding: 0 $spacing-base;
+  margin:$spacing-sm;
+  height:100%;
 
   &::after {
     content: "";
@@ -91,23 +92,22 @@ $input-radius: 0.5rem;
 .underline{
   position: relative;
   display: inline-block;
-
-
   &::before {
     content: "";
     position: absolute;
     bottom: -8px; 
     left: 0;
-    width: 25%;
+    width: 35%;
     border-bottom: 0px solid $color-subtask-bar;
   }
 }
 @media (width < 767px){
-  .underline{
+  .underline:before{
       border-bottom: 3px solid $color-subtask-bar;
   }
   .line-seperator{
     border-right: 0px solid $color-subtask-bar;
+    display: none;
   }
  
 }

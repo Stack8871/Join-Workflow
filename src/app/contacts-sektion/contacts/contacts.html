@@ -34,12 +34,12 @@
   </div>
 </div>
   <section class="contacts-detail-container" [ngClass]="mobileClass">
-        <div class="back-btn">
-      <button [class.mobile-only]="true" (click)="closeContactDetails()">
-          <img src="/icons/arrow-left.svg" alt="">
+    <div class="back-btn">
+      <button (click)="closeContactDetails()">
+      <img src="/icons/arrow-left.svg" alt="">
       </button> 
     </div>
-    <div class="contacts-info-container" [ngClass]="mobileClass">
+    <div class="contacts-info-container">
       <h1>Contacts</h1>
       <span class="line-seperator">&nbsp;</span>
       <h3 class="underline">Better with a team</h3>

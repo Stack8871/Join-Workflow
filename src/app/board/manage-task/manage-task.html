@@ -18,23 +18,30 @@
 
   </div>
   <div class="grid-board">
-    <div class="column" *ngFor="let col of columns">
+    @for (col of columns; track col.id) {
+    <div class="column">
         <div class="flex space-between">
           <h4>{{ col.title }}</h4> <button class=" add-icon">+</button></div>
         <div
           cdkDropList
           [cdkDropListData]="col.tasks"
           [cdkDropListConnectedTo]="connectedDropLists"
-          class=""
+          class="drop-list"
           (cdkDropListDropped)="drop($event)"
           [id]="col.id"
         >
-          <div class="card flex column" *ngFor="let task of col.tasks" cdkDrag>
+          @if (col.tasks.length === 0) {
+          <div class="empty-column-message">
+            No tasks yet. Drag tasks here.
+          </div>
+          }
+          @for (task of col.tasks; track task) {
+          <div class="card flex column" cdkDrag>
             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
             <div class=""><span class="category"> User Story</span></div>
             <div class="task-title"><h4> HTML Base Template Creation</h4></div>
             <div class="description">shortescription</div>
-              <mat-progress-bar mode="determinate" value="90"></mat-progress-bar> 
+              <mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
             <div class="flex subtask-progress">
             <span>1/3</span>
             </div>
@@ -43,14 +50,13 @@
                     <div class="circle blue z-index-30">br</div>
                     <div class="circle red z-index-40">sr</div>
                     <div class="circle blue z-index-50">tm</div>
-              </div>          
+              </div>
               <div>priority</div>
             </div>
           </div>
+          }
         </div>
     </div>
+    }
   </div>
 </div>
-<app-task-detail>
-  
-</app-task-detail>

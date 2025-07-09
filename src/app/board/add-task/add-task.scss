@@ -65,11 +65,13 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    width: 440px;
 
     label {
       font-weight: 600;
       font-size: var(--font-size-base);
       color: $color-text-heading;
+      width: 100%;
     }
 
     .validation-message {

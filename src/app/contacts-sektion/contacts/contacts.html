@@ -1,7 +1,7 @@
 <div class="contacts-page-container" [ngClass]="mobileClass">
   <div class="contact-container" [ngClass]="mobileClass">
   <button class="add-contact-btn" (click)="openAddContact()">
-    Add new contact
+    <span>Add new contact</span>
     <img src="/icons-white/person_add.svg" alt="check" class="new-contact-icon" />
   </button>
   <div class="contact-list">
@@ -34,12 +34,12 @@
   </div>
 </div>
   <section class="contacts-detail-container" [ngClass]="mobileClass">
-        <div class="back-btn">
-      <button [class.mobile-only]="true" (click)="closeContactDetails()">
-          <img src="/icons/arrow-left.svg" alt="">
+    <div class="back-btn">
+      <button (click)="closeContactDetails()">
+      <img src="/icons/arrow-left.svg" alt="">
       </button> 
     </div>
-    <div class="contacts-info-container" [ngClass]="mobileClass">
+    <div class="contacts-info-container">
       <h1>Contacts</h1>
       <span class="line-seperator">&nbsp;</span>
       <h3 class="underline">Better with a team</h3>
@@ -69,13 +69,18 @@
           <div class="contacts-information" [ngClass]="mobileClass">
             <h3>Contact Information</h3>
             <h4 class="email-link">Email</h4>
-            <a href="#">{{ selectedContact.email }}</a>
+            <a href="mailto:{{ selectedContact.email }}">{{ selectedContact.email }}</a>
             <h4>Phone</h4>
-            <p>{{ selectedContact.phone }}</p>
+            <a href="tel:{{ selectedContact.phone }}">{{ selectedContact.phone }}</a>
           </div>
     </div>
     }
   </section>
+  <div class="mobile-btn-add-contact">
+      <button (click)="openAddContact()">
+    <img src="/icons-white/person_add.svg" alt="check" />
+  </button>
+  </div>
 </div>
 
 <app-add-contacts 

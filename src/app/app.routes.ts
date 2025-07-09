@@ -12,7 +12,7 @@ export const routes: Routes = [
   { path: 'board', component: ManageTask },
   { path: 'contacts', component: Contacts },
   { path: 'summary', component:summary},
-    { path: 'login', component: TaskDetail },
+    { path: 'login', component: Login },
   { path: 'add-task', component: AddTask },
   { path: '**', redirectTo: '' }
 ];

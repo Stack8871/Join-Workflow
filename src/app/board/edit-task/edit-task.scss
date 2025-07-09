@@ -3,29 +3,24 @@
   .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-
+    height:5.19rem;
     label {
       font-size: var(--font-size-base);
       color: $color-text-heading;
     }
-
     .validation-message {
       color: #FF0000;
       font-size: var(--font-size-sm);
       margin-top: 4px;
     }
   }
-
   .priority-buttons {
     display: flex;
     gap: 1rem;
     width: 440px;
-
     @media (max-width: 480px) {
       flex-direction: column;
     }
-
     .priority-btn {
       flex: 1;
       height: 64px;

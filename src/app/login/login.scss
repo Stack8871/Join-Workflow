@@ -5,7 +5,8 @@
     align-items: center;
 }
 .login-content{
-    max-width: 652px;
+    width:100%;
+    max-width: 720px;
 }
 .single-wrapper{
   display: flex;
@@ -39,7 +40,7 @@ footer{
     height:65px;
 }
 .big-card{
-    max-width:652px;
+    max-width:720px;
     padding:$spacing-5xl;
     justify-content: center;
     display: flex;
@@ -58,7 +59,7 @@ footer{
     position: absolute;
     bottom: -8px; // Abstand zur Schrift
     left: 43%;
-    width: 15%;
+    width: 35%;
     border-bottom: 3px solid $color-subtask-bar;
   }
 }

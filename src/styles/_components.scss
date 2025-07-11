@@ -185,6 +185,17 @@ color:$color-medium-gray;
   }
 }
 
+.ghost-btn{
+  background: $button-cancel-bg;
+  border: 1px solid $button-cancel-border;
+  color: $button-cancel-text;
+  &:hover{
+    box-shadow:$card-shadow;
+    color:$color-subtask-bar;
+    border: 1px solid $color-subtask-bar;
+  }
+}
+
 .input-group {
   position: relative;
       width: 100%;
